@@ -1,5 +1,5 @@
 package cards;
 
-public class Rule extends Card {
+public abstract class Rule extends Card {
 
 }

@@ -51,4 +51,8 @@ public class Game {
 	public void viewRules() {
 		
 	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
 }

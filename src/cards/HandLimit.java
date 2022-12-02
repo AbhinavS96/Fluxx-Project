@@ -1,5 +1,5 @@
 package cards;
 
-public class HandLimit {
-
+public class HandLimit extends Rule {
+	int handLimit;
 }

@@ -5,6 +5,12 @@ import java.util.List;
 
 import cards.Card;
 
+
+/**
+ * 
+ * @author abhinav
+ *
+ */
 public class Player {
 	String name;
 	int id;
@@ -27,11 +33,15 @@ public class Player {
 	}
 	
 	public Card play() {
-		
+		/**
+		 * This is where the play action is made by the player
+		 */
 	}
 
 	public void draw(Card card) {
-		
+		/**
+		 * This is where the draw action is completed. 
+		 */
 	}
 	
 	public void addKeeper(Card card) {

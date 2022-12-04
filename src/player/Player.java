@@ -1,5 +1,6 @@
 package player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cards.Card;
@@ -9,21 +10,20 @@ public class Player {
 	int id;
 	List<Card> hand;
 	List<Card> keepers;
-
-	public int getId() {
-		
+	
+	public Player(String name, int id){
+		this.name = name;
+		this.id = id;
+		this.hand = new ArrayList<>();
+		this.keepers = new ArrayList<>();
 	}
 
-	public void setId(int id) {
-		
+	public int getId() {
+		return this.id;
 	}
 
 	public String getName() {
-		
-	}
-
-	public void setName(String name) {
-		
+		return this.name;
 	}
 	
 	public Card play() {
@@ -35,7 +35,7 @@ public class Player {
 	}
 	
 	public void addKeeper(Card card) {
-		
+		this.keepers.add(card);
 	}
 	
 	public Card discardKeeper() {

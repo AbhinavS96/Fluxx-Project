@@ -47,11 +47,27 @@ public class Player {
 	}
 	
 	public void viewhand() {
+		if(this.hand.size() == 0) {
+			System.out.println("No cards on hand");
+			return;
+		}
 		
+		System.out.println("Card in hand are:");
+		for(Card i:this.hand) {
+			System.out.println(i.getCardName());
+		}
 	}
 	
 	public void viewKeepers() {
+		if(this.hand.size() == 0) {
+			System.out.println("No keepers in play");
+			return;
+		}
 		
+		System.out.println("Card in hand are:");
+		for(Card i:this.keepers) {
+			System.out.println(i.getCardName());
+		}
 	}
 
 }

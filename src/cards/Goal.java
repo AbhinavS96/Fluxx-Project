@@ -2,7 +2,7 @@ package cards;
 
 import java.util.List;
 
-public class Goal {
+public class Goal extends Card{
 	List<Integer> goalRequirements;
 	String goalDescription;
 

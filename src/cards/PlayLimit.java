@@ -7,20 +7,20 @@ import game.Game;
  *
  */
 
-public class PlayLimit extends Rule{
+public class PlayLimit extends Rule {
 	int playLimit;
 
-	public int getPlayLimit() {
-		return this.playLimit;
-	}
+	public PlayLimit(String name, int playLimit) {
+		// Call the super constructor with the name argument
+		super(name);
 
-	public void setPlayLimit(int playLimit) {
 		this.playLimit = playLimit;
 	}
 
 	@Override
 	public void cardAction(Game game) {
-		//set the play limit for the game to the value of the playLimit instance variable
+		// set the play limit for the game to the value of the playLimit instance
+		// variable
 		game.setPlayLimit(this.playLimit);
 	}
 }

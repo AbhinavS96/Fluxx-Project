@@ -11,6 +11,11 @@ public class Goal {
 	List<Integer> goalRequirements;
 	String goalDescription;
 
+	public Goal(List<Integer> goalRequirements, String goalDescription) {
+		this.goalRequirements = goalRequirements;
+		this.goalDescription = goalDescription;
+	}
+
 	public List<Integer> getGoalRequirements() {
 		return this.goalRequirements;
 	}

@@ -10,17 +10,17 @@ import game.Game;
 public class HandLimit extends Rule {
 	int handLimit;
 
-	public int getHandLimit() {
-		return this.handLimit;
-	}
+	public HandLimit(String name, int handLimit) {
+		// Calls the super constructor with the name argument
+		super(name);
 
-	public void setHandLimit(int handLimit) {
 		this.handLimit = handLimit;
 	}
 
 	@Override
 	public void cardAction(Game game) {
-		////set the hand limit for the game to the value of the handLimit instance variable
+		//// set the hand limit for the game to the value of the handLimit instance
+		//// variable
 		game.setHandLimit(this.handLimit);
 	}
 }

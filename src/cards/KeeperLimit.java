@@ -10,17 +10,17 @@ import game.Game;
 public class KeeperLimit extends Rule {
 	int keeperLimit;
 
-	public int getKeeperLimit() {
-		return this.keeperLimit;
-	}
+	public KeeperLimit(String name, int keeperLimit) {
+		// Calls the super constructor with the name argument
+		super(name);
 
-	public void setKeeperLimit(int keeperLimit) {
 		this.keeperLimit = keeperLimit;
 	}
 
 	@Override
 	public void cardAction(Game game) {
-		//set the keeper limit for the game to the value of the keeperLimit instance variable
+		// set the keeper limit for the game to the value of the keeperLimit instance
+		// variable
 		game.setKeeperLimit(this.keeperLimit);
 	}
 }

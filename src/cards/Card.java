@@ -9,9 +9,13 @@ import game.Game;
 
 public abstract class Card {
 	String cardName;
-	
+
+	public Card(String name) {
+		this.cardName = name;
+	}
+
 	public abstract void cardAction(Game game);
-	
+
 	public String getCardName() {
 		return this.cardName;
 	}

@@ -91,4 +91,8 @@ public class Game {
 		
 		System.out.println(this.currentGoal.getCardName());
 	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
 }

@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cards.Card;
@@ -66,17 +67,35 @@ public class Game {
 	}
 	
 	public void checkWinner() {
-		
+		for(Player p:this.players) {
+			//check if goal id matches keeper id of the player
+		}
+	}
+	
+	private List<Card> resetDiscardPile(){
+		List<Card> newDeck = shuffle(this.discardPile);
+		this.discardPile = null;
+		return newDeck;
+	}
+	
+	private List<Card> shuffle(List<Card> deck){
+		Collections.shuffle(deck);
+		return deck;
 	}
 	
 	public void setDeck(List<Card> deck) {
-		this.deck = deck;
+		this.deck = shuffle(deck);
 	}
 	
 	public void viewRules() {
 		/**
 		 * This function outputs the current rules of the game for the players' reference
 		 */
+		System.out.println("Current rules:");
+		System.out.println("play limit: " + this.playLimit);
+		System.out.println("draw limit: " + this.drawLimit);
+		System.out.println("hand limit: " + this.handLimit);
+		System.out.println("keeper limit: " + this.keeperLimit);
 	}
 	
 	public void viewGoals() {

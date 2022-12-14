@@ -2,16 +2,19 @@ package cards;
 
 import java.util.List;
 
+import game.Game;
+
 /**
  * @author Massina
  *
  */
 
-public class Goal {
+public class Goal extends Card{
 	List<Integer> goalRequirements;
 	String goalDescription;
 
-	public Goal(List<Integer> goalRequirements, String goalDescription) {
+	public Goal(String name, List<Integer> goalRequirements, String goalDescription) {
+		super(name);
 		this.goalRequirements = goalRequirements;
 		this.goalDescription = goalDescription;
 	}
@@ -32,4 +35,9 @@ public class Goal {
 		this.goalDescription = goalDescription;
 	}
 
+	@Override
+	public void cardAction(Game game) {
+		// TODO Auto-generated method stub
+		
+	}
 }

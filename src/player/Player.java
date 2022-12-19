@@ -5,22 +5,23 @@ import java.util.List;
 import java.util.Scanner;
 
 import cards.Card;
-
-
 /**
  *
  * @author abhinav
  *
  */
+
+
+
 public class Player {
 	String name;
 	int id;
 	List<Card> hand;
 	List<Card> keepers;
 	
-	public Player(String name, int id){
-		this.name = name;
-		this.id = id;
+	public Player(int playerCount) {
+		this.name = "Player " + playerCount;
+		this.id = playerCount;
 		this.hand = new ArrayList<>();
 		this.keepers = new ArrayList<>();
 	}

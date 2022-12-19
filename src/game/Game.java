@@ -22,7 +22,7 @@ public class Game {
 	List<Player> players;
 	Player currentPlayer;
 	
-	public Game(List<Card> deck, List<Player> players) {
+	public Game(int numberOfPlayers) {
 		/**
 		 * Constructor that sets up the game. 
 		 * The limits are set as per the basic rules. -1 represents that the rule is not in play;

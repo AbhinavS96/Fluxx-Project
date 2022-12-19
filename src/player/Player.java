@@ -9,6 +9,11 @@ public class Player {
 	int id;
 	List<Card> hand;
 	List<Card> keepers;
+	
+	public Player(int playerCount) {
+		this.name = "Player " + playerCount;
+		this.id = playerCount;
+	}
 
 	public int getId() {
 		

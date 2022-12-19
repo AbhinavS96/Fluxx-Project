@@ -26,18 +26,33 @@ public class Game {
 		/**
 		 * Constructor that sets up the game. 
 		 * The limits are set as per the basic rules. -1 represents that the rule is not in play;
-		 * The shuffled deck and players are passed as arguments
 		 * The discard pile is empty. Current player is not set.
 		 */		
 		
 		this.playLimit = 1;
 		this.handLimit = -1;
 		this.drawLimit = 1;
-		this.keeperLimit = -1;		
-		this.deck = deck;
-		this.players = players;
+		this.keeperLimit = -1;
 		this.currentGoal = null;
-		this.discardPile = new ArrayList<>();
+		
+		this.deck = new ArrayList<Card>();
+		initializeCards();
+		Collections.shuffle(deck);
+		this.discardPile = new ArrayList<Card>();
+		
+		this.players = new ArrayList<Player>(numberOfPlayers);
+		initializePlayers();
+		this.currentPlayer = players.get(0);
+	}
+	
+	private void initializeCards(){
+		//add cards to the deck.
+	}
+	
+	private void initializePlayers() {
+		for(int i = 0; i < this.players.size(); ++i) {
+			this.players.set(i, new Player(i));
+		}
 	}
 	
 	public void setPlayLimit(int playLimit) {

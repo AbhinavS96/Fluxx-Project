@@ -11,8 +11,6 @@ import cards.Card;
  *
  */
 
-
-
 public class Player {
 	String name;
 	int id;
@@ -34,16 +32,21 @@ public class Player {
 		return this.name;
 	}
 	
-	public Card play() {
+	public Card play(int cardNumber) {
 		/**
 		 * This is where the play action is made by the player
 		 */
+		return this.hand.remove(cardNumber);
 	}
 
 	public void draw(Card card) {
 		/**
 		 * This is where the draw action is completed. 
 		 */
+		//print which card is picked by the user
+		System.out.println(card);
+		//add the cards to his hand
+		this.hand.add(card);
 	}
 	
 	public void addKeeper(Card card) {
@@ -62,10 +65,10 @@ public class Player {
 		//need to validate input here
 		int input = sc.nextInt();
 		//maybe also display the 
-		this.keepers.remove(input);
+		return this.keepers.remove(input);
 	}
 	
-	Card discardCard() {
+	public Card discardCard() {
 		/**
 		 * user should be able to view and delete one or more cards on hand
 		 */

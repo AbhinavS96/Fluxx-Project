@@ -53,6 +53,7 @@ public class Game {
 		for(int i = 0; i < this.players.size(); ++i) {
 			this.players.set(i, new Player(i));
 		}
+		//should deal 3 cards to each player here.
 	}
 	
 	public void setPlayLimit(int playLimit) {
@@ -79,27 +80,50 @@ public class Game {
 		/**
 		 * This the where the game loop runs
 		 */
+		while(true) {
+			//draw till draw limit, check if draw is possible each time
+			//move to another function
+			for(int i = 0; i < this.drawLimit; ++i) {
+				if(this.deck.size() == 0) {
+					resetDiscardPile();
+				}
+				//draw the last card and remove it from the deck
+				this.currentPlayer.draw(this.deck.remove(this.deck.size()-1));
+			}
+			for(int i = 0; i < this.playLimit; ++i) {
+				//play -requires input. also check if user is out of cards
+				int cardNumber;
+				Card playedCard = this.currentPlayer.play(cardNumber);
+				//Let the card do it's action
+				playedCard.cardAction(this);
+				//case Rule -limits updated.
+				//case playrule -do nothing. the loop will handle it.
+				//case drawrule -card action should trigger the remaining draws
+				//case handlimitrule -everyone except current player discards in card action
+				//for current user, handlimit is checked at the end of the turn
+				//case keeperlimit rule -same as handlimit
+				//case Keeper -card action add to players list
+				//case Goal -replace the current goal
+				//check if winner happens in card action
+				//till play limit
+			}
+			//check handlimit 
+			//check keeperlimit
+		}
+		
 	}
 	
-	public void checkWinner() {
+	public boolean checkWinner() {
 		for(Player p:this.players) {
 			//check if goal id matches keeper id of the player
 		}
+		return false;
 	}
 	
-	private List<Card> resetDiscardPile(){
-		List<Card> newDeck = shuffle(this.discardPile);
+	private void resetDiscardPile(){
+		Collections.shuffle(this.discardPile);
+		this.deck = this.discardPile;
 		this.discardPile = null;
-		return newDeck;
-	}
-	
-	private List<Card> shuffle(List<Card> deck){
-		Collections.shuffle(deck);
-		return deck;
-	}
-	
-	public void setDeck(List<Card> deck) {
-		this.deck = shuffle(deck);
 	}
 	
 	public void viewRules() {

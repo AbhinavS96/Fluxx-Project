@@ -22,5 +22,6 @@ public class KeeperLimit extends Rule {
 		// set the keeper limit for the game to the value of the keeperLimit instance
 		// variable
 		game.setKeeperLimit(this.keeperLimit);
+		//remove extra keepers for everyone except current player
 	}
 }

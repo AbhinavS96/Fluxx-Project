@@ -27,6 +27,14 @@ public class Player {
 	public int getId() {
 		return this.id;
 	}
+	
+	public int getHandSize() {
+		return this.hand.size();
+	}
+	
+	public int getKeeperSize() {
+		return this.keepers.size();
+	}
 
 	public String getName() {
 		return this.name;

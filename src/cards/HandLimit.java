@@ -23,5 +23,6 @@ public class HandLimit extends Rule {
 		//// variable
 		game.setHandLimit(this.handLimit);
 		//everyone except current player discards
+		
 	}
 }

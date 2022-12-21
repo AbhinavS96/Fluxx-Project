@@ -13,14 +13,12 @@ public class DrawLimit extends Rule {
 	public DrawLimit(String name, int drawLimit) {
 		// Calls the super constructor with the name argument
 		super(name);
-
 		this.drawLimit = drawLimit;
 	}
 
 	@Override
 	public void cardAction(Game game) {
-		//check if the draw limit is greater. If so, trigger sufficient draws for the 
-		//current user.
+		//if the current user can draw more, he draws more. this is handled in game.setDrawLimit()
 		// set the draw limit for the game to the value of the drawLimit instance
 		// variable
 		game.setDrawLimit(this.drawLimit);

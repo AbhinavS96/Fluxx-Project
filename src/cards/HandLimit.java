@@ -8,7 +8,7 @@ import game.Game;
  */
 
 public class HandLimit extends Rule {
-	int handLimit;
+	private int handLimit;
 
 	public HandLimit(String name, int handLimit) {
 		// Calls the super constructor with the name argument

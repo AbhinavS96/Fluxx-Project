@@ -17,12 +17,12 @@ import player.Player;
 
 public class Game {
 	
-	int playLimit, handLimit, drawLimit, keeperLimit;
-	Goal currentGoal;
-	List<Card> deck;
-	List<Card> discardPile;
-	List<Player> players;
-	int currentPlayer;
+	private int playLimit, handLimit, drawLimit, keeperLimit;
+	private Goal currentGoal;
+	private List<Card> deck;
+	private List<Card> discardPile;
+	private List<Player> players;
+	private int currentPlayer;
 	boolean isThereAWinner;
 	
 	public Game(int numberOfPlayers) {

@@ -10,7 +10,7 @@ import game.Game;
  */
 
 public class Goal extends Card{
-	List<String> goalRequirements;
+	private List<String> goalRequirements;
 
 	public Goal(String name, String cardDescription, List<String> goalRequirements) {
 		super(name, "GOAL", cardDescription);

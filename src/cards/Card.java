@@ -8,9 +8,9 @@ import game.Game;
  */
 
 public abstract class Card {
-	String cardName;
-	String cardType;
-	String cardDescription;
+	protected String cardName;
+	protected String cardType;
+	protected String cardDescription;
 
 	public Card(String name, String cardType, String cardDescription) {
 		this.cardName = name;

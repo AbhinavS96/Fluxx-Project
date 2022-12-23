@@ -8,7 +8,7 @@ import game.Game;
  */
 
 public class KeeperLimit extends Rule {
-	int keeperLimit;
+	private int keeperLimit;
 
 	public KeeperLimit(String name, int keeperLimit) {
 		// Calls the super constructor with the name argument

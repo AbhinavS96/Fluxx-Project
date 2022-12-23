@@ -12,10 +12,10 @@ import cards.Card;
  */
 
 public class Player {
-	String name;
-	int id;
-	List<Card> hand;
-	List<Card> keepers;
+	private String name;
+	private int id;
+	private List<Card> hand;
+	private List<Card> keepers;
 	
 	public Player(int playerCount) {
 		this.name = "Player " + playerCount;
@@ -59,6 +59,10 @@ public class Player {
 	
 	public void addKeeper(Card card) {
 		this.keepers.add(card);
+	}
+	
+	public List<Card> getKeepers() {
+		return this.keepers;
 	}
 	
 	public Card discardKeeper() {

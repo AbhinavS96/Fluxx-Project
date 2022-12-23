@@ -10,9 +10,9 @@ import game.Game;
 public class DrawLimit extends Rule {
 	private int drawLimit;
 
-	public DrawLimit(String name, int drawLimit) {
+	public DrawLimit(int drawLimit) {
 		// Calls the super constructor with the name argument
-		super(name, "Draw " + drawLimit + " cards per turn. If you just played this card, draw extra cards as needed to reach 2 cards drawn.");
+		super("Draw " + drawLimit + " cards per turn. If you just played this card, draw extra cards as needed to reach 2 cards drawn.");
 		this.drawLimit = drawLimit;
 	}
 

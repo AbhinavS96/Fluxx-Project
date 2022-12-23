@@ -10,9 +10,9 @@ import game.Game;
 public class PlayLimit extends Rule {
 	private int playLimit;
 
-	public PlayLimit(String name, int playLimit) {
+	public PlayLimit(int playLimit) {
 		// Call the super constructor with the name argument
-		super(name, "Play" + playLimit + " cards per turn. If you have fewer than that, play all your cards");
+		super("Play" + playLimit + " cards per turn. If you have fewer than that, play all your cards");
 		this.playLimit = playLimit;
 	}
 

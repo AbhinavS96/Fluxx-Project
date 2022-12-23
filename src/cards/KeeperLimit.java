@@ -10,9 +10,9 @@ import game.Game;
 public class KeeperLimit extends Rule {
 	private int keeperLimit;
 
-	public KeeperLimit(String name, int keeperLimit) {
+	public KeeperLimit(int keeperLimit) {
 		// Calls the super constructor with the name argument
-		super(name, "If it isn't your turn, you can only have " + keeperLimit + " keepers in play. Discard extras immediately. You may acquire new Keepers during your turn as long as you discard down to " + keeperLimit + " when your turn ends");
+		super("If it isn't your turn, you can only have " + keeperLimit + " keepers in play. Discard extras immediately. You may acquire new Keepers during your turn as long as you discard down to " + keeperLimit + " when your turn ends");
 		this.keeperLimit = keeperLimit;
 	}
 

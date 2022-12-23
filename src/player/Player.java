@@ -52,6 +52,7 @@ public class Player {
 		 * This is where the draw action is completed. 
 		 */
 		//print which card is picked by the user
+		System.out.println("Card drawn: ");
 		System.out.println(card);
 		//add the cards to his hand
 		this.hand.add(card);
@@ -72,7 +73,7 @@ public class Player {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("choose a keeper to remove");
 		for(int i = 0; i < this.keepers.size(); ++i) {
-			System.out.println(i + this.keepers.get(i).getCardName());
+			System.out.println(i + this.keepers.get(i).toString());
 		}
 		//need to validate input here
 		int input = sc.nextInt();
@@ -87,7 +88,7 @@ public class Player {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("choose a card to remove");
 		for(int i = 0; i < this.hand.size(); ++i) {
-			System.out.println(i + this.keepers.get(i).getCardName());
+			System.out.println(i + this.keepers.get(i).toString());
 		}
 		//need to validate input here
 		int input = sc.nextInt();
@@ -103,7 +104,7 @@ public class Player {
 		
 		System.out.println("Card in hand are:");
 		for(Card i:this.hand) {
-			System.out.println(i.getCardName());
+			System.out.println(i);
 		}
 	}
 	
@@ -115,7 +116,7 @@ public class Player {
 		
 		System.out.println("Card in hand are:");
 		for(Card i:this.keepers) {
-			System.out.println(i.getCardName());
+			System.out.println(i);
 		}
 	}
 

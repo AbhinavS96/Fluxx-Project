@@ -1,8 +1,11 @@
 package cards;
 
 public abstract class Rule extends Card {
-    public Rule(String name, String cardDescription) {
+	protected String cardDescription;
+	
+    public Rule(String cardDescription) {
         // Call the super constructor with the name argument
-        super(name, "RULE", cardDescription);
+        super("RULE");
+        this.cardDescription = cardDescription;
     }
 }

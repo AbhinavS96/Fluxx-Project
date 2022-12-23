@@ -8,9 +8,11 @@ import game.Game;
  */
 
 public class Keeper extends Card{
+	private String cardName;
 
 	public Keeper(String cardName) {
-		super(cardName, "KEEPER", "");
+		super("KEEPER");
+		this.cardName = cardName;
 	}
 
 	@Override

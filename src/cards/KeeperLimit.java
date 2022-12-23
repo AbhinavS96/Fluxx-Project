@@ -12,8 +12,7 @@ public class KeeperLimit extends Rule {
 
 	public KeeperLimit(String name, int keeperLimit) {
 		// Calls the super constructor with the name argument
-		super(name);
-
+		super(name, "If it isn't your turn, you can only have " + keeperLimit + " keepers in play. Discard extras immediately. You may acquire new Keepers during your turn as long as you discard down to " + keeperLimit + " when your turn ends");
 		this.keeperLimit = keeperLimit;
 	}
 
@@ -23,5 +22,12 @@ public class KeeperLimit extends Rule {
 		// variable
 		game.setKeeperLimit(this.keeperLimit);
 		//remove extra keepers for everyone except current player
+	}
+	
+	public String toString() {
+		return "NEW " + this.cardType + "\n" 
+				+ "Keeper Limit " + this.keeperLimit + "\n"
+				+ "Replaces Keeper Limit" + "\n"
+				+ this.cardDescription;
 	}
 }

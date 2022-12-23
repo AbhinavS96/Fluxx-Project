@@ -12,8 +12,7 @@ public class PlayLimit extends Rule {
 
 	public PlayLimit(String name, int playLimit) {
 		// Call the super constructor with the name argument
-		super(name);
-
+		super(name, "Play" + playLimit + " cards per turn. If you have fewer than that, play all your cards");
 		this.playLimit = playLimit;
 	}
 
@@ -22,5 +21,12 @@ public class PlayLimit extends Rule {
 		// set the play limit for the game to the value of the playLimit instance
 		// variable
 		game.setPlayLimit(this.playLimit);
+	}
+	
+	public String toString() {
+		return "NEW " + this.cardType + "\n" 
+				+ "PLay " + this.playLimit + "\n"
+				+ "Replaces Play Rule" + "\n"
+				+ this.cardDescription;
 	}
 }

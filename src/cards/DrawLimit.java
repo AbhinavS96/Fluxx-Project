@@ -12,7 +12,7 @@ public class DrawLimit extends Rule {
 
 	public DrawLimit(String name, int drawLimit) {
 		// Calls the super constructor with the name argument
-		super(name);
+		super(name, "Draw " + drawLimit + " cards per turn. If you just played this card, draw extra cards as needed to reach 2 cards drawn.");
 		this.drawLimit = drawLimit;
 	}
 
@@ -23,5 +23,12 @@ public class DrawLimit extends Rule {
 		// variable
 		game.setDrawLimit(this.drawLimit);
 
+	}
+	
+	public String toString() {
+		return "NEW " + this.cardType + "\n" 
+				+ "Draw " + this.drawLimit + "\n"
+				+ "Replaces Draw Rule" + "\n"
+				+ this.cardDescription;
 	}
 }

@@ -8,19 +8,9 @@ import game.Game;
  */
 
 public class Keeper extends Card{
-	int keeperID;
 
-	public Keeper(String cardName, int keeperID) {
-		super(cardName);
-		this.keeperID = keeperID;
-	}
-
-	public int getKeeperID() {
-		return this.keeperID;
-	}
-
-	public void setKeeperID(int keeperID) {
-		this.keeperID = keeperID;
+	public Keeper(String cardName) {
+		super(cardName, "KEEPER", "");
 	}
 
 	@Override
@@ -29,6 +19,10 @@ public class Keeper extends Card{
 		//check if someone won
 		game.getCurrentPlayer().addKeeper(this);
 		game.checkWinner();
+	}
+	
+	public String toString() {
+		return this.cardType + "\n" + this.cardName;
 	}
 
 }

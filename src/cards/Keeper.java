@@ -26,5 +26,9 @@ public class Keeper extends Card{
 	public String toString() {
 		return this.cardType + "\n" + this.cardName;
 	}
+	
+	public String getCardName() {
+		return this.cardName;
+	}
 
 }

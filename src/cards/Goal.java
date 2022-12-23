@@ -38,6 +38,7 @@ public class Goal extends Card{
 	@Override
 	public void cardAction(Game game) {
 		// TODO Auto-generated method stub
-		
+		game.setGoal(this);
+		game.checkWinner();
 	}
 }

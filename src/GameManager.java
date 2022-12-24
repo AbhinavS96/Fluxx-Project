@@ -58,12 +58,12 @@ public class GameManager {
 				System.out.println("Something went wrong... Please try again.");
 			}
 		}
-		sc.close();
 		
 		//When multiple games are implemented a second argument could be an object of the child Game type
 		GameManager gameManager = new GameManager(numberOfPlayers);
 		System.out.println("Starting the game!");
 		gameManager.startGame();
+		sc.close();
 	}
 
 }

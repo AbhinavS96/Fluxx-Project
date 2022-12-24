@@ -12,7 +12,7 @@ public class PlayLimit extends Rule {
 
 	public PlayLimit(int playLimit) {
 		// Call the super constructor with the name argument
-		super("Play" + playLimit + " cards per turn. If you have fewer than that, play all your cards");
+		super("Play " + playLimit + " cards per turn. If you have fewer than that, play all your cards");
 		this.playLimit = playLimit;
 	}
 

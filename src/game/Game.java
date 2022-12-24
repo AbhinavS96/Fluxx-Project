@@ -115,7 +115,7 @@ public class Game {
 		}
 		for(int i = 0; i < 3; ++i) {
 			for(Player p:this.players) {
-				p.draw(this.deck.remove(this.deck.size()-1));
+				p.addCard(this.deck.remove(this.deck.size()-1));
 			}
 		}		
 		this.currentPlayer = 0;
@@ -160,8 +160,10 @@ public class Game {
 	public void play() {	
 		while(!isThereAWinner) {
 			//draw till draw limit, check if draw is possible each time
+			System.out.println(this.players.get(currentPlayer) + " draws");
 			drawCards(this.drawLimit);
 			
+			System.out.println(this.players.get(currentPlayer) + " plays");
 			//play till play limit
 			for(int i = 0; i < this.playLimit; ++i) {
 				//check if user is out of cards. If so, turn ends
@@ -173,7 +175,7 @@ public class Game {
 				this.players.get(this.currentPlayer).viewhand();
 				
 				Scanner sc = new Scanner(System.in);
-				int cardNumber;
+				int cardNumber = 0;
 				while(true) {
 					try {
 						System.out.println("choose a card to play");
@@ -184,26 +186,28 @@ public class Game {
 						}
 						break;
 					}
-					//InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
+//					InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
 					catch (InputMismatchException e) {
 						System.out.println("Invalid input... Please try again.");
 					}
 					catch (Exception e) {
 						System.out.println("Something went wrong... Please try again.");
+						System.out.println(e);
 					}
 				}				
-				sc.close();
 				Card playedCard = this.players.get(currentPlayer).play(cardNumber-1);
 				//Let the card do it's action
 				playedCard.cardAction(this);
 				//add the played card to the discard pile
 				this.discardPile.add(playedCard);
 				if(isThereAWinner) {
+					sc.close();
 					return;
 				}
 			}
 			//check hand limit ignore case -1
 			while(this.handLimit != -1 && this.players.get(currentPlayer).getHandSize() > this.handLimit) {
+				System.out.println("aaa");
 				this.discardPile.add(this.players.get(currentPlayer).discardCard());
 			}
 			//check keeper limit ignore case -1
@@ -229,7 +233,7 @@ public class Game {
 	 * 2. During a rule change where the parameter will have the value of the remaining draws
 	 */
 	private void drawCards(int drawLimit) {
-		System.out.println(this.players.size());
+		System.out.println("drawing " + drawLimit + " cards");
 		for(int i = 0; i < drawLimit; ++i) {
 			//if the deck is empty, the discard pile is reshuffled and added back into the deck
 			if(this.deck.size() == 0) {

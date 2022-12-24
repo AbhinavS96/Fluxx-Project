@@ -19,7 +19,7 @@ public class Player {
 	private List<Card> keepers;
 	
 	public Player(int playerCount) {
-		this.name = "Player " + playerCount;
+		this.name = "Player " + (playerCount+1);
 		this.id = playerCount;
 		this.hand = new ArrayList<>();
 		this.keepers = new ArrayList<>();

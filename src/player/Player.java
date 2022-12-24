@@ -178,4 +178,8 @@ public class Player {
 			System.out.println((i+1) + ". " + this.keepers.get(i));
 		}
 	}
+	
+	public String toString() {
+		return this.name;
+	}
 }

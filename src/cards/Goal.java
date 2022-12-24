@@ -9,7 +9,7 @@ import game.Game;
  *
  */
 
-public class Goal extends Card{
+public class Goal extends Card implements Comparable<List<Card>>{
 	private String cardName;
 	private List<String> goalRequirements;
 
@@ -35,5 +35,20 @@ public class Goal extends Card{
 			response += this.goalRequirements.get(i);
 		}
 		return response;
+	}
+	
+	/**
+	 * 
+	 * @param keepersInHand are the keepers to compare
+	 * The compareTo method checks if the incoming keepers satisfy the goal requirements
+	 * 
+	 */
+	public int compareTo(List <Card> keepersInHand) {
+		for(String requirement: this.goalRequirements) {
+			if(!keepersInHand.contains(new Keeper(requirement))) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.spi.CalendarDataProvider;
 
 import cards.Card;
 import cards.DrawLimit;
@@ -261,9 +260,10 @@ public class Game {
 	public void checkWinner() {
 		for(Player p:this.players) {
 			//check if goal id matches keeper id of the player
-			
-			if() {
+			if(this.currentGoal.compareTo(p.getKeepers()) == 0) {
 				this.isThereAWinner = true;
+				System.out.println(p + " has won the game!");
+				return;
 			}
 		}
 	}

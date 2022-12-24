@@ -1,5 +1,7 @@
 package cards;
 
+import java.util.Objects;
+
 import game.Game;
 
 /**
@@ -29,6 +31,22 @@ public class Keeper extends Card{
 	
 	public String getCardName() {
 		return this.cardName;
+	}
+	
+	//Using this to make contains method work as expected
+	//Reference https://stackoverflow.com/questions/2642589/how-does-a-arraylists-contains-method-evaluate-objects
+	@Override
+	public int hashCode() {
+		return Objects.hash(cardName);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof Keeper)
+        {
+            return Objects.equals(cardName, ((Keeper)(object)).cardName);
+        }
+		return false;
 	}
 
 }

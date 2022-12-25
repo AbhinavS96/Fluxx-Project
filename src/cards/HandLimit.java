@@ -8,12 +8,11 @@ import game.Game;
  */
 
 public class HandLimit extends Rule {
-	int handLimit;
+	private int handLimit;
 
-	public HandLimit(String name, int handLimit) {
+	public HandLimit(int handLimit) {
 		// Calls the super constructor with the name argument
-		super(name);
-
+		super("You can only have " + handLimit + " card in your hand. Discard extras immediately. During your turn this rule does not apply to you; discard at the end of your turn");
 		this.handLimit = handLimit;
 	}
 
@@ -24,5 +23,12 @@ public class HandLimit extends Rule {
 		game.setHandLimit(this.handLimit);
 		//everyone except current player discards
 		
+	}
+	
+	public String toString() {
+		return "NEW " + this.cardType + "\n" 
+				+ "Hand Limit " + this.handLimit + "\n"
+				+ "Replaces Hand Limit" + "\n"
+				+ this.cardDescription;
 	}
 }

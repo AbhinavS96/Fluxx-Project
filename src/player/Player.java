@@ -1,6 +1,7 @@
 package player;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,13 +13,13 @@ import cards.Card;
  */
 
 public class Player {
-	String name;
-	int id;
-	List<Card> hand;
-	List<Card> keepers;
+	private String name;
+	private int id;
+	private List<Card> hand;
+	private List<Card> keepers;
 	
 	public Player(int playerCount) {
-		this.name = "Player " + playerCount;
+		this.name = "Player " + (playerCount+1);
 		this.id = playerCount;
 		this.hand = new ArrayList<>();
 		this.keepers = new ArrayList<>();
@@ -40,20 +41,35 @@ public class Player {
 		return this.name;
 	}
 	
+	/**
+	 * 
+	 * @param cardNumber is the index of the card to be removed
+	 * This is where the play action is made by the player
+	 * @return the card that was played by the user
+	 * 
+	 */
 	public Card play(int cardNumber) {
-		/**
-		 * This is where the play action is made by the player
-		 */
 		return this.hand.remove(cardNumber);
 	}
-
+	
+	/**
+	 * 
+	 * @param card the card to be added to the users hand
+	 * 
+	 */
+	public void addCard(Card card) {
+		this.hand.add(card);
+	}
+	
+	/**
+	 * 
+	 * @param card is the card that the user got from the top of the deck 
+	 * This is where the draw action is completed. 
+	 * 
+	 */
 	public void draw(Card card) {
-		/**
-		 * This is where the draw action is completed. 
-		 */
-		//print which card is picked by the user
+		System.out.println("Card drawn: ");
 		System.out.println(card);
-		//add the cards to his hand
 		this.hand.add(card);
 	}
 	
@@ -61,34 +77,82 @@ public class Player {
 		this.keepers.add(card);
 	}
 	
+	public List<Card> getKeepers(){
+		return this.keepers;
+	}
+	
+	/**
+	 * 
+	 * user can view and delete a keeper
+	 * @return card that is removed. It gets added to the discard pile
+	 * 
+	 */
 	public Card discardKeeper() {
-		/**
-		 * user should be able to view and delete one or more keepers
-		 */
+		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("choose a keeper to remove");
 		for(int i = 0; i < this.keepers.size(); ++i) {
-			System.out.println(i + this.keepers.get(i).getCardName());
+			System.out.println(i + this.keepers.get(i).toString());
 		}
-		//need to validate input here
-		int input = sc.nextInt();
-		//maybe also display the 
-		return this.keepers.remove(input);
+		int cardNumber;
+		while(true) {
+			try {
+				System.out.println("choose a keeper to discard");
+				cardNumber = sc.nextInt();
+				if(cardNumber < 1 || cardNumber > this.keepers.size()) {
+					System.out.println("Please choose a valid card number...");
+					continue;
+				}
+				break;
+			}
+			//InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
+			catch (InputMismatchException e) {
+				System.out.println("Invalid input... Please try again.");
+			}
+			catch (Exception e) {
+				System.out.println("Something went wrong... Please try again.");
+			}
+		}	
+		sc.close();
+		return this.keepers.remove(cardNumber);
 	}
 	
+	
+	/**
+	 * 
+	 * user can view and delete a card on hand
+	 * @return card that is removed. It gets added to the discard pile
+	 * 
+	 */
 	public Card discardCard() {
-		/**
-		 * user should be able to view and delete one or more cards on hand
-		 */
 		Scanner sc = new Scanner(System.in);
-		System.out.println("choose a card to remove");
+		
 		for(int i = 0; i < this.hand.size(); ++i) {
-			System.out.println(i + this.keepers.get(i).getCardName());
+			System.out.println((i+1) + this.hand.get(i).toString());
 		}
 		//need to validate input here
-		int input = sc.nextInt();
-		//maybe also display the 
-		return this.keepers.remove(input);		
+		int cardNumber;
+		while(true) {
+			try {
+				System.out.println("choose a card to discard");
+				cardNumber = sc.nextInt();
+				if(cardNumber < 1 || cardNumber > this.hand.size()) {
+					System.out.println("Please choose a valid card number...");
+					continue;
+				}
+				break;
+			}
+			//InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
+			catch (InputMismatchException e) {
+				System.out.println("Invalid input... Please try again.");
+			}
+			catch (Exception e) {
+				System.out.println("Something went wrong... Please try again.");
+			}
+		}	
+		sc.close();
+		System.out.println("Discarding " + this.hand.get(cardNumber-1));
+		return this.hand.remove(cardNumber-1);		
 	}
 	
 	public void viewhand() {
@@ -98,8 +162,8 @@ public class Player {
 		}
 		
 		System.out.println("Card in hand are:");
-		for(Card i:this.hand) {
-			System.out.println(i.getCardName());
+		for(int i = 0; i < this.hand.size(); ++i) {
+			System.out.println((i+1) + ". " + this.hand.get(i));
 		}
 	}
 	
@@ -110,9 +174,12 @@ public class Player {
 		}
 		
 		System.out.println("Card in hand are:");
-		for(Card i:this.keepers) {
-			System.out.println(i.getCardName());
+		for(int i = 0; i < this.keepers.size(); ++i) {
+			System.out.println((i+1) + ". " + this.keepers.get(i));
 		}
 	}
-
+	
+	public String toString() {
+		return this.name;
+	}
 }

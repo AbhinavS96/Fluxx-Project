@@ -9,36 +9,46 @@ import game.Game;
  *
  */
 
-public class Goal extends Card{
-	List<Integer> goalRequirements;
-	String goalDescription;
+public class Goal extends Card implements Comparable<List<Card>>{
+	private String cardName;
+	private List<String> goalRequirements;
 
-	public Goal(String name, List<Integer> goalRequirements, String goalDescription) {
-		super(name);
+	public Goal(String cardName, List<String> goalRequirements) {
+		super("GOAL");
+		this.cardName = cardName;
 		this.goalRequirements = goalRequirements;
-		this.goalDescription = goalDescription;
 	}
 
-	public List<Integer> getGoalRequirements() {
+	public List<String> getGoalRequirements() {
 		return this.goalRequirements;
-	}
-
-	public void setGoalRequirements(List<Integer> goalRequirements) {
-		this.goalRequirements = goalRequirements;
-	}
-
-	public String getGoalDescription() {
-		return this.goalDescription;
-	}
-
-	public void setGoalDescription(String goalDescription) {
-		this.goalDescription = goalDescription;
 	}
 
 	@Override
 	public void cardAction(Game game) {
-		// TODO Auto-generated method stub
 		game.setGoal(this);
 		game.checkWinner();
+	}
+	
+	public String toString() {
+		String response = this.cardType + "\n" + this.cardName + "\n" + this.goalRequirements.get(0);
+		for(int i = 1; i < this.goalRequirements.size(); ++i) {
+			response += this.goalRequirements.get(i);
+		}
+		return response;
+	}
+	
+	/**
+	 * 
+	 * @param keepersInHand are the keepers to compare
+	 * The compareTo method checks if the incoming keepers satisfy the goal requirements
+	 * 
+	 */
+	public int compareTo(List <Card> keepersInHand) {
+		for(String requirement: this.goalRequirements) {
+			if(!keepersInHand.contains(new Keeper(requirement))) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 }

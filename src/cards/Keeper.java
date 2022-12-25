@@ -1,5 +1,7 @@
 package cards;
 
+import java.util.Objects;
+
 import game.Game;
 
 /**
@@ -8,19 +10,11 @@ import game.Game;
  */
 
 public class Keeper extends Card{
-	int keeperID;
+	private String cardName;
 
-	public Keeper(String cardName, int keeperID) {
-		super(cardName);
-		this.keeperID = keeperID;
-	}
-
-	public int getKeeperID() {
-		return this.keeperID;
-	}
-
-	public void setKeeperID(int keeperID) {
-		this.keeperID = keeperID;
+	public Keeper(String cardName) {
+		super("KEEPER");
+		this.cardName = cardName;
 	}
 
 	@Override
@@ -29,6 +23,30 @@ public class Keeper extends Card{
 		//check if someone won
 		game.getCurrentPlayer().addKeeper(this);
 		game.checkWinner();
+	}
+	
+	public String toString() {
+		return this.cardType + "\n" + this.cardName;
+	}
+	
+	public String getCardName() {
+		return this.cardName;
+	}
+	
+	//Using this to make contains method work as expected
+	//Reference https://stackoverflow.com/questions/2642589/how-does-a-arraylists-contains-method-evaluate-objects
+	@Override
+	public int hashCode() {
+		return Objects.hash(cardName);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof Keeper)
+        {
+            return Objects.equals(cardName, ((Keeper)(object)).cardName);
+        }
+		return false;
 	}
 
 }

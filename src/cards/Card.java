@@ -8,19 +8,11 @@ import game.Game;
  */
 
 public abstract class Card {
-	String cardName;
+	protected String cardType;
 
-	public Card(String name) {
-		this.cardName = name;
+	public Card(String cardType) {
+		this.cardType = cardType;
 	}
 
 	public abstract void cardAction(Game game);
-
-	public String getCardName() {
-		return this.cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
 }

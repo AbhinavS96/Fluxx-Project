@@ -8,12 +8,11 @@ import game.Game;
  */
 
 public class PlayLimit extends Rule {
-	int playLimit;
+	private int playLimit;
 
-	public PlayLimit(String name, int playLimit) {
+	public PlayLimit(int playLimit) {
 		// Call the super constructor with the name argument
-		super(name);
-
+		super("Play " + playLimit + " cards per turn. If you have fewer than that, play all your cards");
 		this.playLimit = playLimit;
 	}
 
@@ -22,5 +21,12 @@ public class PlayLimit extends Rule {
 		// set the play limit for the game to the value of the playLimit instance
 		// variable
 		game.setPlayLimit(this.playLimit);
+	}
+	
+	public String toString() {
+		return "NEW " + this.cardType + "\n" 
+				+ "PLay " + this.playLimit + "\n"
+				+ "Replaces Play Rule" + "\n"
+				+ this.cardDescription;
 	}
 }

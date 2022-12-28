@@ -1,3 +1,4 @@
+package InputManager;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class InputManager {
 		InputManager.scanner.close();
 	}
 	
-	public static int getIntergerInput(String displayText, int lowerLimit, int upperLimit) {
+	public static int getIntergerInput(String displayText, int lowerLimit, int upperLimit, String errorMessage) {
 		int numberOfPlayers;
 		while(true) {
 			try {
@@ -25,7 +26,7 @@ public class InputManager {
 			}
 			//InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
 			catch (InputMismatchException e) {
-				System.out.println("Invalid input... Please try again.");
+				System.out.println(errorMessage);
 				//removing the wrong the input from the scanner
 				scanner.next();
 			}

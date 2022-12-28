@@ -1,3 +1,4 @@
+import InputManager.InputManager;
 import game.Game;
 
 /**
@@ -35,7 +36,7 @@ public class GameManager {
 		System.out.println("Welcome to Simplified Fluxx!!");
 		InputManager.initializeInputManager();
 		//There could also be an option to choose the type of Fluxx
-		int numberOfPlayers = InputManager.getIntergerInput("Choose the number of players (2-6)", 2, 6);
+		int numberOfPlayers = InputManager.getIntergerInput("Choose the number of players (2-6)", 2, 6, "Invalid input... Please try again.");
 		//When multiple games are implemented a second argument could be an object of the child Game type
 		GameManager gameManager = new GameManager(numberOfPlayers);
 		System.out.println("Starting the game!");

@@ -3,10 +3,9 @@ package game;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
+import InputManager.InputManager;
 import cards.Card;
 import cards.DrawLimit;
 import cards.Goal;
@@ -37,6 +36,7 @@ public class Game {
 	 * Constructor that sets up the game. 
 	 * The limits are set as per the basic rules. -1 represents that the rule is not in play;
 	 * The discard pile is initially empty. Current player is set to 0.
+	 * 
 	 */	
 	public Game(int numberOfPlayers) {	
 		
@@ -50,7 +50,6 @@ public class Game {
 		
 		this.deck = new ArrayList<Card>();
 		initializeCards();
-		Collections.shuffle(this.deck);
 		this.discardPile = new ArrayList<Card>();
 		
 		initializePlayers(numberOfPlayers);
@@ -100,6 +99,9 @@ public class Game {
 		//keeper limit
 		this.deck.add(new KeeperLimit(2));
 		this.deck.add(new KeeperLimit(3));
+		
+		//Shuffle the deck
+		Collections.shuffle(this.deck);
 	}
 	
 	/**
@@ -174,34 +176,15 @@ public class Game {
 				
 				this.players.get(this.currentPlayer).viewhand();
 				
-				Scanner sc = new Scanner(System.in);
-				int cardNumber = 0;
-				while(true) {
-					try {
-						System.out.println("choose a card to play");
-						cardNumber = sc.nextInt();
-						if(cardNumber < 1 || cardNumber > this.players.get(currentPlayer).getHandSize()) {
-							System.out.println("Please choose a valid card number...");
-							continue;
-						}
-						break;
-					}
-//					InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
-					catch (InputMismatchException e) {
-						System.out.println("Invalid input... Please try again.");
-					}
-					catch (Exception e) {
-						System.out.println("Something went wrong... Please try again.");
-						System.out.println(e);
-					}
-				}				
+				//User actually has more options -refactor
+				int cardNumber = InputManager.getIntergerInput("Choose a card to play", 1, this.players.get(currentPlayer).getHandSize(), "Please choose a valid card number...");			
+				
 				Card playedCard = this.players.get(currentPlayer).play(cardNumber-1);
 				//Let the card do it's action
 				playedCard.cardAction(this);
 				//add the played card to the discard pile
 				this.discardPile.add(playedCard);
 				if(isThereAWinner) {
-					sc.close();
 					return;
 				}
 			}

@@ -1,10 +1,9 @@
 package player;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
+import InputManager.InputManager;
 import cards.Card;
 /**
  *
@@ -88,32 +87,12 @@ public class Player {
 	 * 
 	 */
 	public Card discardKeeper() {
-		
-		Scanner sc = new Scanner(System.in);
 		System.out.println("choose a keeper to remove");
 		for(int i = 0; i < this.keepers.size(); ++i) {
 			System.out.println(i + this.keepers.get(i).toString());
 		}
-		int cardNumber;
-		while(true) {
-			try {
-				System.out.println("choose a keeper to discard");
-				cardNumber = sc.nextInt();
-				if(cardNumber < 1 || cardNumber > this.keepers.size()) {
-					System.out.println("Please choose a valid card number...");
-					continue;
-				}
-				break;
-			}
-			//InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
-			catch (InputMismatchException e) {
-				System.out.println("Invalid input... Please try again.");
-			}
-			catch (Exception e) {
-				System.out.println("Something went wrong... Please try again.");
-			}
-		}	
-		sc.close();
+		int cardNumber = InputManager.getIntergerInput("choose a keeper to discard", 1, this.keepers.size(), "Please choose a valid card number...");
+		System.out.println("Discarding " + this.hand.get(cardNumber-1));
 		return this.keepers.remove(cardNumber);
 	}
 	
@@ -125,32 +104,12 @@ public class Player {
 	 * 
 	 */
 	public Card discardCard() {
-		Scanner sc = new Scanner(System.in);
 		
 		for(int i = 0; i < this.hand.size(); ++i) {
 			System.out.println((i+1) + this.hand.get(i).toString());
 		}
-		//need to validate input here
-		int cardNumber;
-		while(true) {
-			try {
-				System.out.println("choose a card to discard");
-				cardNumber = sc.nextInt();
-				if(cardNumber < 1 || cardNumber > this.hand.size()) {
-					System.out.println("Please choose a valid card number...");
-					continue;
-				}
-				break;
-			}
-			//InputMismatchException reference: https://stackoverflow.com/questions/38830142/how-to-handle-invalid-input-when-using-scanner-nextint
-			catch (InputMismatchException e) {
-				System.out.println("Invalid input... Please try again.");
-			}
-			catch (Exception e) {
-				System.out.println("Something went wrong... Please try again.");
-			}
-		}	
-		sc.close();
+		
+		int cardNumber = InputManager.getIntergerInput("Choose a card to discard", 1, this.hand.size(), "Please choose a valid card number...");
 		System.out.println("Discarding " + this.hand.get(cardNumber-1));
 		return this.hand.remove(cardNumber-1);		
 	}

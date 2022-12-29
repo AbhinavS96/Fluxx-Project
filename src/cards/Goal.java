@@ -42,6 +42,7 @@ public class Goal extends Card implements Comparable<List<Card>>{
 	 * 
 	 * @param keepersInHand are the keepers in hand of a player to compare
 	 * The compareTo method checks if the incoming keepers satisfy the goal requirements
+	 * This can be extended to accommodate checking goals that require one of two keepers 
 	 * 
 	 */
 	public int compareTo(List <Card> keepersInHand) {

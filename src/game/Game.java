@@ -19,13 +19,16 @@ import player.Player;
 
 public abstract class Game {
 	
-	private Integer playLimit, handLimit, drawLimit, keeperLimit;
+	protected Integer playLimit;
+	protected Integer handLimit;
+	protected Integer drawLimit;
+	protected Integer keeperLimit;
 	private Goal currentGoal;
 	protected List<Card> deck;
 	private List<Card> discardPile;
 	private List<Player> players;
 	private int currentPlayer;
-	boolean isThereAWinner;
+	private boolean isThereAWinner;
 	
 	/**
 	 * 
@@ -124,6 +127,13 @@ public abstract class Game {
 		System.out.println();
 	}
 	
+	protected void resetRules() {
+		this.playLimit = 1;
+		this.handLimit = null;
+		this.drawLimit = 1;
+		this.keeperLimit = null;
+	}
+	
 	/**
 	 * 
 	 * This the where the game loop runs
@@ -175,7 +185,7 @@ public abstract class Game {
 				
 				this.players.get(this.currentPlayer).viewhand();
 				System.out.println((this.players.get(this.currentPlayer).getHandSize()+1) + ". Go back\n");
-				int cardNumber = InputManager.getIntergerInput("Choose a card to play or go back to previous menu...", 1, this.players.get(currentPlayer).getHandSize(), "Please choose a valid card number...");			
+				int cardNumber = InputManager.getIntergerInput("Choose a card to play or go back to previous menu...", 1, this.players.get(currentPlayer).getHandSize()+1, "Please choose a valid card number...");			
 				
 				if(cardNumber == this.players.get(this.currentPlayer).getHandSize()+1) {
 					i--;
@@ -228,7 +238,7 @@ public abstract class Game {
 	 * 1. During a regular draw action
 	 * 2. During a rule change where the parameter will have the value of the remaining draws
 	 */
-	private void drawCards(int drawLimit) {
+	protected void drawCards(int drawLimit) {
 		System.out.println("Drawing " + drawLimit + " cards...");
 		for(int i = 0; i < drawLimit; ++i) {
 			//if the deck is empty, the discard pile is reshuffled and added back into the deck
@@ -292,6 +302,10 @@ public abstract class Game {
 		}
 	}
 	
+	/**
+	 * Checks if any player has won by comparing keepers against goal
+	 * Multi goal support can be added here as an extension 
+	 */
 	public void checkWinner() {
 		for(Player p:this.players) {
 			//check if goal requirements matches keeper name of the player
@@ -303,9 +317,15 @@ public abstract class Game {
 		}
 	}
 	
-	private void resetDiscardPile(){
-		Collections.shuffle(this.discardPile);
-		this.deck = this.discardPile;
+	/**
+	 * This function will get called in two cases.
+	 * 1. When the deck is empty
+	 * 2. WHen the "Empty the Trash" Action is played where the discard pile is added to the deck and shuffled
+	 * Both cases are handled by this.deck.addAll()
+	 */
+	protected void resetDiscardPile(){
+		this.deck.addAll(this.discardPile);
+		Collections.shuffle(this.deck);
 		this.discardPile = new ArrayList<>();
 	}
 	

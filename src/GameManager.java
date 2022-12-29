@@ -1,6 +1,7 @@
 import InputManager.InputManager;
 import game.Game;
 import game.SimplifiedFluxx;
+import game.StandardFluxx;
 
 /**
  * 
@@ -21,7 +22,11 @@ public class GameManager {
 	 */
 	public GameManager(int numberOfPlayers, int gameType) {
 		switch(gameType) {
-		case 1: this.game = new SimplifiedFluxx(numberOfPlayers);
+		case 1: 
+			this.game = new SimplifiedFluxx(numberOfPlayers);
+			break;
+		case 2:
+			this.game = new StandardFluxx(numberOfPlayers);
 		}
 	}
 	
@@ -62,7 +67,8 @@ public class GameManager {
 			case 1: 
 				System.out.println("\nGame Type");
 				System.out.println("1. Simplified Fluxx");
-				int gameType = InputManager.getIntergerInput("Choose the game type", 1, 1, "Invalid input... Please try again.");
+				System.out.println("2. Standard Fluxx");
+				int gameType = InputManager.getIntergerInput("Choose the game type", 1, 2, "Invalid input... Please try again.");
 				int numberOfPlayers = InputManager.getIntergerInput("Choose the number of players (2-6)", 2, 6, "Invalid input... Please try again.");
 				GameManager gameManager = new GameManager(numberOfPlayers, gameType);
 				System.out.println("\n*******Starting the game!*******\n");

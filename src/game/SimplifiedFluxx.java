@@ -24,6 +24,10 @@ public class SimplifiedFluxx extends Game {
 		super(numberOfPlayers);
 	}
 	
+	/**
+	 * This is a basic collection of cards to show the game in action
+	 * Standard fluxx has a larger deck of cards
+	 */
 	protected void initializeCards(){
 		//Add cards to the deck.
 		//Goal cards

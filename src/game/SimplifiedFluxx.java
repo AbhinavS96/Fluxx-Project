@@ -11,6 +11,13 @@ import cards.Keeper;
 import cards.KeeperLimit;
 import cards.PlayLimit;
 
+/**
+ * 
+ * @author abhinav
+ * This is the implementation of the Simplified Fluxx code
+ * Currently, this initializes the cards.
+ *
+ */
 public class SimplifiedFluxx extends Game {
 
 	public SimplifiedFluxx(int numberOfPlayers) {
@@ -18,8 +25,8 @@ public class SimplifiedFluxx extends Game {
 	}
 	
 	protected void initializeCards(){
-		//add cards to the deck.
-		//goals
+		//Add cards to the deck.
+		//Goal cards
 		//reference for Arrays.asList: https://www.geeksforgeeks.org/initialize-an-arraylist-in-java/
 		this.deck.add(new Goal("The Appliances", new ArrayList<String>(Arrays.asList("Television", "The Toaster"))));
 		this.deck.add(new Goal("The Bakery", new ArrayList<String>(Arrays.asList("Bread", "Cookies"))));
@@ -30,7 +37,7 @@ public class SimplifiedFluxx extends Game {
 		this.deck.add(new Goal("Chocolate Milk", new ArrayList<String>(Arrays.asList("Chocolate", "Milk"))));
 		this.deck.add(new Goal("Chocolate Extravaganza", new ArrayList<String>(Arrays.asList("Chocolate", "The Party"))));
 		
-		//keepers
+		//Keeper cards
 		this.deck.add(new Keeper("Television"));
 		this.deck.add(new Keeper("The Toaster"));
 		this.deck.add(new Keeper("Bread"));
@@ -45,17 +52,17 @@ public class SimplifiedFluxx extends Game {
 		this.deck.add(new Keeper("Milk"));
 		this.deck.add(new Keeper("The Party"));
 		
-		//rules
-		//draw limit
+		//Rule cards
+		//Draw Limit
 		this.deck.add(new DrawLimit(2));
 		this.deck.add(new DrawLimit(3));
-		//play limit
+		//Play Limit
 		this.deck.add(new PlayLimit(2));
 		this.deck.add(new PlayLimit(3));
-		//hand limit
+		//Hand Limit
 		this.deck.add(new HandLimit(1));
 		this.deck.add(new HandLimit(2));
-		//keeper limit
+		//Keeper Limit
 		this.deck.add(new KeeperLimit(2));
 		this.deck.add(new KeeperLimit(3));
 		

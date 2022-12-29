@@ -1,5 +1,11 @@
 package cards;
 
+
+/**
+ * 
+ * @author abhinav
+ *
+ */
 public abstract class Rule extends Card {
 	protected final String cardDescription;
 	

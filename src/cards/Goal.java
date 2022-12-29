@@ -6,6 +6,7 @@ import game.Game;
 
 /**
  * @author Massina
+ * Goal requrements are a list of Keeper names. This is matched while checking for a winner
  *
  */
 
@@ -39,7 +40,7 @@ public class Goal extends Card implements Comparable<List<Card>>{
 	
 	/**
 	 * 
-	 * @param keepersInHand are the keepers to compare
+	 * @param keepersInHand are the keepers in hand of a player to compare
 	 * The compareTo method checks if the incoming keepers satisfy the goal requirements
 	 * 
 	 */

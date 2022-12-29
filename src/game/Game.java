@@ -12,7 +12,9 @@ import player.Player;
 /**
  * 
  * @author abhinav
- * This is the implementation of simplified fluxx
+ * This is the implementation of main game logic
+ * Implementation specific logic is implemented in child classes
+ * 
  */
 
 public abstract class Game {
@@ -52,6 +54,7 @@ public abstract class Game {
 	/**
 	 * 
 	 * Function that creates all the cards and adds them to the deck
+	 * It is implemented in the child class
 	 */
 	protected abstract void initializeCards();
 	
@@ -79,6 +82,11 @@ public abstract class Game {
 		System.out.println("Play Limit updated to " + playLimit + "\n");
 	}
 
+	/**
+	 * 
+	 * @param handLimit is the updated Hand Limit
+	 * If there is a need to discard cards, the discardHand function is called
+	 */
 	public void setHandLimit(int handLimit) {
 		System.out.println("Hand Limit updated to " + handLimit + "\n");
 		if(this.handLimit != null && handLimit < this.handLimit) {
@@ -96,6 +104,11 @@ public abstract class Game {
 		this.drawLimit = drawLimit;
 	}
 
+	/**
+	 * 
+	 * @param keeperLimit is the updated Keeper Limit
+	 * If there is a need to discard Keepers, the discardKeepers function is called
+	 */
 	public void setKeeperLimit(int keeperLimit) {
 		System.out.println("Keeper Limit updated to " + keeperLimit + "\n");
 		if(this.keeperLimit != null && this.keeperLimit < keeperLimit) {
@@ -114,18 +127,18 @@ public abstract class Game {
 	/**
 	 * 
 	 * This the where the game loop runs
-	 * Cards are drawn till the draw limit
+	 * Cards are drawn till the Draw Limit
 	 * The user can choose which card to play
 	 * The card will then perform it's own action
-	 * All limits are verified at the end of the turn to make sure that everyone complies
+	 * All limits are verified at the end of the turn to make sure that all players complies with them
 	 */
 	public void play() {	
 		while(!isThereAWinner) {
 			System.out.println("*****" + this.players.get(currentPlayer) + "'s turn starts*****\n");
-			//draw till draw limit, check if draw is possible each time
+			//draw till Draw Limit, check if draw is possible each time
 			drawCards(this.drawLimit);
 			
-			//play till play limit
+			//play till Play Limit
 			for(int i = 0; i < this.playLimit; ++i) {
 				System.out.println(this.players.get(currentPlayer) + "'s turn to play...");
 				//check if user is out of cards. If so, turn ends
@@ -184,12 +197,12 @@ public abstract class Game {
 				}
 			}
 			
-			//check hand limit ignore case null
+			//check Hand Limit, ignore case null
 			while(this.handLimit != null && this.players.get(currentPlayer).getHandSize() > this.handLimit) {
 				System.out.println("You have more cards than the Hand Limit. Please discard " +  (this.players.get(currentPlayer).getHandSize() - this.handLimit) + " cards...\n");
 				this.discardPile.add(this.players.get(currentPlayer).discardCard());
 			}
-			//check keeper limit ignore case null
+			//check Keeper Limit, ignore case null
 			while(this.keeperLimit != null && this.players.get(currentPlayer).getKeeperSize() > this.keeperLimit) {
 				System.out.println("You have more Keepers than the Keeper Limit. Please discard " +  (this.players.get(currentPlayer).getKeeperSize() - this.keeperLimit) + " keepers...\n");
 				this.discardPile.add(this.players.get(currentPlayer).discardKeeper());
@@ -229,8 +242,8 @@ public abstract class Game {
 	
 	/**
 	 * 
-	 * @param handLimit is the updated hand limit when a rule is changed
-	 * All players except the current have to discard cards
+	 * @param handLimit is the updated Hand Limit when a rule is changed
+	 * All players except the current have to discard cards if they have too many on their hand
 	 */
 	private void discardHand(int handLimit) {
 		System.out.println("\nHand Limit has changed. All players have to comply...\n");
@@ -251,8 +264,8 @@ public abstract class Game {
 	
 	/**
 	 * 
-	 * @param keeperLimit is the updated keeper limit when the rule is changed
-	 * All players except the current have to discard keepers immediately
+	 * @param keeperLimit is the updated Keeper Limit when the rule is changed
+	 * All players except the current have to discard keepers immediately if they have too many Keepers in play
 	 */
 	private void discardKeepers(int keeperLimit) {
 		System.out.println("\nKeeper Limit has changed. All players have to comply...\n");
@@ -281,7 +294,7 @@ public abstract class Game {
 	
 	public void checkWinner() {
 		for(Player p:this.players) {
-			//check if goal id matches keeper id of the player
+			//check if goal requirements matches keeper name of the player
 			if(this.currentGoal != null && this.currentGoal.compareTo(p.getKeepers()) == 0) {
 				this.isThereAWinner = true;
 				System.out.println(p + " has won the game!\n");

@@ -5,10 +5,10 @@ import game.SimplifiedFluxx;
 /**
  * 
  * @author abhinav
- * This is the driver class that manages everything. Ideally, Game should be an abstract parent class
- * with different game types as children. Based on the input, the game can be initialized.
- * In this implementation, that is not done and by default, simplified fluxx is implemented.
+ * This is the driver class that manages everything.
+ * The number of players and the type of the game is taken as an input from the user
  * Game credits: https://www.looneylabs.com/
+ * 
  */
 
 public class GameManager {
@@ -29,18 +29,22 @@ public class GameManager {
 		this.game.play();
 	}
 	
+	/**
+	 * This function displays a help menu to the user before starting the game
+	 */
 	public static void howToPlay() {
 		System.out.println("********** How to Play **********\n");
 		System.out.println("Fluxx games are all about change. \nThe game begins with just a couple of simple rules, then becomes more complex little by little as additional rule cards are played. \nAt first there will be no way to win - that's what Goal cards are for. \nEach Goal has a different victory condition, but they all require you to collect special cards called Keepers. \nAs soon as someone's collection of Keepers matches the current Goal, they win!");
 		System.out.println("More info: https://www.looneylabs.com/sites/default/files/literature/Fluxx5.0Rules.pdf");
+		System.out.println("To play, follow the menu items and input the matching number to choose an option.");
 		System.out.println("\n*********************************\n");
 	}
 	
 	/**
 	 * 
 	 * @param args not used
-	 * This is where the game starts. Repeatedly asks for valid input -the number of players
-	 * Then it starts Simplified Fluxx
+	 * This is where the game starts. Takes the game type and number of players as an input from the user
+	 * Then it starts the chosen version. Only Simplified Fluxx is completely implemented
 	 */
 	public static void main(String args[]) {
 		System.out.println("Welcome to Simplified Fluxx!!\n");
@@ -59,8 +63,7 @@ public class GameManager {
 				System.out.println("\nGame Type");
 				System.out.println("1. Simplified Fluxx");
 				int gameType = InputManager.getIntergerInput("Choose the game type", 1, 1, "Invalid input... Please try again.");
-				int numberOfPlayers = InputManager.getIntergerInput("Choose the number of players (2-6)", 1, 6, "Invalid input... Please try again.");
-				//When multiple games are implemented a second argument could be an object of the child Game type
+				int numberOfPlayers = InputManager.getIntergerInput("Choose the number of players (2-6)", 2, 6, "Invalid input... Please try again.");
 				GameManager gameManager = new GameManager(numberOfPlayers, gameType);
 				System.out.println("\n*******Starting the game!*******\n");
 				gameManager.startGame();

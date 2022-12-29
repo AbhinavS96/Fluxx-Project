@@ -8,24 +8,24 @@ import cards.Card;
 /**
  *
  * @author abhinav
+ * This class manages all the actions of a player
  *
  */
 
 public class Player {
 	private final String name;
-	private final int id;
 	private List<Card> hand;
 	private List<Card> keepers;
 	
+	/**
+	 * 
+	 * @param playerCount is the index of the player in the game
+	 * index+1 is appended to construct the player name
+	 */
 	public Player(int playerCount) {
 		this.name = "Player " + (playerCount+1);
-		this.id = playerCount;
 		this.hand = new ArrayList<>();
 		this.keepers = new ArrayList<>();
-	}
-
-	public int getId() {
-		return this.id;
 	}
 	
 	public int getHandSize() {
@@ -45,7 +45,6 @@ public class Player {
 	 * @param cardNumber is the index of the card to be removed
 	 * This is where the play action is made by the player
 	 * @return the card that was played by the user
-	 * 
 	 */
 	public Card play(int cardNumber) {
 		return this.hand.remove(cardNumber);
@@ -54,7 +53,6 @@ public class Player {
 	/**
 	 * 
 	 * @param card the card to be added to the users hand
-	 * 
 	 */
 	public void addCard(Card card) {
 		this.hand.add(card);
@@ -64,7 +62,6 @@ public class Player {
 	 * 
 	 * @param card is the card that the user got from the top of the deck 
 	 * This is where the draw action is completed. 
-	 * 
 	 */
 	public void draw(Card card) {
 		System.out.println("Card drawn: ");
@@ -88,7 +85,6 @@ public class Player {
 	 * 
 	 * user can view and delete a keeper
 	 * @return card that is removed. It gets added to the discard pile
-	 * 
 	 */
 	public Card discardKeeper() {
 		viewKeepers();
@@ -102,7 +98,6 @@ public class Player {
 	 * 
 	 * user can view and delete a card on hand
 	 * @return card that is removed. It gets added to the discard pile
-	 * 
 	 */
 	public Card discardCard() {
 		viewhand();

@@ -8,7 +8,7 @@ import game.Game;
  */
 
 public class PlayLimit extends Rule {
-	private int playLimit;
+	private final int playLimit;
 
 	public PlayLimit(int playLimit) {
 		// Call the super constructor with the name argument

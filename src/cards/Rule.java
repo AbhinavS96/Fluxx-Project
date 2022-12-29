@@ -1,7 +1,13 @@
 package cards;
 
+
+/**
+ * 
+ * @author abhinav
+ *
+ */
 public abstract class Rule extends Card {
-	protected String cardDescription;
+	protected final String cardDescription;
 	
     public Rule(String cardDescription) {
         // Call the super constructor with the name argument

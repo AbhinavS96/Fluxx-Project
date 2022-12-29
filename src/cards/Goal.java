@@ -6,12 +6,13 @@ import game.Game;
 
 /**
  * @author Massina
+ * Goal requrements are a list of Keeper names. This is matched while checking for a winner
  *
  */
 
 public class Goal extends Card implements Comparable<List<Card>>{
-	private String cardName;
-	private List<String> goalRequirements;
+	private final String cardName;
+	private final List<String> goalRequirements;
 
 	public Goal(String cardName, List<String> goalRequirements) {
 		super("GOAL");
@@ -30,16 +31,16 @@ public class Goal extends Card implements Comparable<List<Card>>{
 	}
 	
 	public String toString() {
-		String response = this.cardType + "\n" + this.cardName + "\n" + this.goalRequirements.get(0);
+		String response = this.cardType + "\n" + this.cardName + "\n" + this.goalRequirements.get(0) + " ";
 		for(int i = 1; i < this.goalRequirements.size(); ++i) {
-			response += this.goalRequirements.get(i);
+			response += "and " + this.goalRequirements.get(i);
 		}
 		return response;
 	}
 	
 	/**
 	 * 
-	 * @param keepersInHand are the keepers to compare
+	 * @param keepersInHand are the keepers in hand of a player to compare
 	 * The compareTo method checks if the incoming keepers satisfy the goal requirements
 	 * 
 	 */

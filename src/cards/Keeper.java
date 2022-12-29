@@ -10,7 +10,7 @@ import game.Game;
  */
 
 public class Keeper extends Card{
-	private String cardName;
+	private final String cardName;
 
 	public Keeper(String cardName) {
 		super("KEEPER");
@@ -33,7 +33,7 @@ public class Keeper extends Card{
 		return this.cardName;
 	}
 	
-	//Using this to make contains method work as expected
+	//Using this to make contains method work as expected inside Goal.compareTo()
 	//Reference https://stackoverflow.com/questions/2642589/how-does-a-arraylists-contains-method-evaluate-objects
 	@Override
 	public int hashCode() {

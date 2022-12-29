@@ -1,5 +1,6 @@
 import InputManager.InputManager;
 import game.Game;
+import game.SimplifiedFluxx;
 
 /**
  * 
@@ -18,8 +19,10 @@ public class GameManager {
 	 * 
 	 * @param numberOfPlayers input from the user giving the number of players in the game
 	 */
-	public GameManager(int numberOfPlayers) {
-		this.game = new Game(numberOfPlayers);
+	public GameManager(int numberOfPlayers, int gameType) {
+		switch(gameType) {
+		case 1: this.game = new SimplifiedFluxx(numberOfPlayers);
+		}
 	}
 	
 	public void startGame() {
@@ -53,10 +56,12 @@ public class GameManager {
 			int choice = InputManager.getIntergerInput("Please choose an option from the menu...", 1, 3, "Invalid input... Please try again.");
 			switch(choice) {
 			case 1: 
-				//There could also be an option to choose the type of Fluxx
-				int numberOfPlayers = InputManager.getIntergerInput("Choose the number of players (2-6)", 2, 6, "Invalid input... Please try again.");
+				System.out.println("\nGame Type");
+				System.out.println("1. Simplified Fluxx");
+				int gameType = InputManager.getIntergerInput("Choose the game type", 1, 1, "Invalid input... Please try again.");
+				int numberOfPlayers = InputManager.getIntergerInput("Choose the number of players (2-6)", 1, 6, "Invalid input... Please try again.");
 				//When multiple games are implemented a second argument could be an object of the child Game type
-				GameManager gameManager = new GameManager(numberOfPlayers);
+				GameManager gameManager = new GameManager(numberOfPlayers, gameType);
 				System.out.println("\n*******Starting the game!*******\n");
 				gameManager.startGame();
 				break;

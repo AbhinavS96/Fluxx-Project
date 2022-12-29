@@ -69,6 +69,7 @@ public class Player {
 	public void draw(Card card) {
 		System.out.println("Card drawn: ");
 		System.out.println(card);
+		System.out.println();
 		this.hand.add(card);
 	}
 	
@@ -123,6 +124,7 @@ public class Player {
 		System.out.println("Card in hand are:");
 		for(int i = 0; i < this.hand.size(); ++i) {
 			System.out.println((i+1) + ". " + this.hand.get(i));
+			System.out.println();
 		}
 	}
 	

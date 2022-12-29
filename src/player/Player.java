@@ -75,6 +75,9 @@ public class Player {
 	
 	public void addKeeper(Card card) {
 		this.keepers.add(card);
+		System.out.println("Keeper added: ");
+		System.out.println(card);
+		System.out.println();
 	}
 	
 	public List<Card> getKeepers(){
@@ -88,10 +91,7 @@ public class Player {
 	 * 
 	 */
 	public Card discardKeeper() {
-		System.out.println("choose a keeper to remove");
-		for(int i = 0; i < this.keepers.size(); ++i) {
-			System.out.println(i + this.keepers.get(i).toString());
-		}
+		viewKeepers();
 		int cardNumber = InputManager.getIntergerInput("choose a keeper to discard", 1, this.keepers.size(), "Please choose a valid card number...");
 		System.out.println("Discarding " + this.hand.get(cardNumber-1));
 		return this.keepers.remove(cardNumber);
@@ -105,11 +105,7 @@ public class Player {
 	 * 
 	 */
 	public Card discardCard() {
-		
-		for(int i = 0; i < this.hand.size(); ++i) {
-			System.out.println((i+1) + this.hand.get(i).toString());
-		}
-		
+		viewhand();
 		int cardNumber = InputManager.getIntergerInput("Choose a card to discard", 1, this.hand.size(), "Please choose a valid card number...");
 		System.out.println("Discarding " + this.hand.get(cardNumber-1));
 		return this.hand.remove(cardNumber-1);		
@@ -117,7 +113,7 @@ public class Player {
 	
 	public void viewhand() {
 		if(this.hand.size() == 0) {
-			System.out.println("No cards on hand");
+			System.out.println("No cards on hand\n");
 			return;
 		}
 		
@@ -129,15 +125,16 @@ public class Player {
 	}
 	
 	public void viewKeepers() {
-		if(this.hand.size() == 0) {
-			System.out.println("No keepers in play");
+		if(this.keepers.size() == 0) {
+			System.out.println("No keepers in play\n");
 			return;
 		}
 		
-		System.out.println("Card in hand are:");
+		System.out.println("Keepers in hand are:");
 		for(int i = 0; i < this.keepers.size(); ++i) {
 			System.out.println((i+1) + ". " + this.keepers.get(i));
 		}
+		System.out.println();
 	}
 	
 	public String toString() {

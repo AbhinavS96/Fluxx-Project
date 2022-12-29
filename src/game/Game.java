@@ -18,7 +18,6 @@ import player.Player;
 /**
  * 
  * @author abhinav
- *
  */
 
 public class Game {
@@ -37,7 +36,6 @@ public class Game {
 	 * Constructor that sets up the game. 
 	 * The limits are set as per the basic rules. -1 represents that the rule is not in play;
 	 * The discard pile is initially empty. Current player is set to 0.
-	 * 
 	 */	
 	public Game(int numberOfPlayers) {	
 		
@@ -57,6 +55,7 @@ public class Game {
 	}
 	
 	/**
+	 * 
 	 * Function that creates all the cards and adds them to the deck
 	 */
 	private void initializeCards(){
@@ -110,7 +109,6 @@ public class Game {
 	 * @param numberOfPlayers number of players in the game
 	 * New players are created. Each of them are dealt 3 cards from the deck
 	 * The current player is initialized to 0
-	 * 
 	 */
 	private void initializePlayers(int numberOfPlayers) {
 		this.players = new ArrayList<Player>(numberOfPlayers);
@@ -127,9 +125,11 @@ public class Game {
 	
 	public void setPlayLimit(int playLimit) {
 		this.playLimit = playLimit;
+		System.out.println("Play Limit updated to " + playLimit + "\n");
 	}
 
 	public void setHandLimit(int handLimit) {
+		System.out.println("Hand Limit updated to " + handLimit + "\n");
 		if(handLimit < this.handLimit) {
 			discardHand(handLimit);
 		}
@@ -137,6 +137,7 @@ public class Game {
 	}
 
 	public void setDrawLimit(int drawLimit) {
+		System.out.println("Draw Limit updated to " + drawLimit + "\n");
 		//check if the draw limit is greater. If so, trigger sufficient draws for the current user.
 		if(this.drawLimit < drawLimit) {
 			drawCards(drawLimit - this.drawLimit);
@@ -145,11 +146,18 @@ public class Game {
 	}
 
 	public void setKeeperLimit(int keeperLimit) {
+		System.out.println("Keeper Limit updated to " + keeperLimit + "\n");
+		if(this.keeperLimit < keeperLimit) {
+			discardKeepers(keeperLimit);
+		}
 		this.keeperLimit = keeperLimit;
 	}
 	
 	public void setGoal(Goal goal) {
 		this.currentGoal = goal;
+		System.out.println("Goal updated to: ");
+		System.out.println(goal);
+		System.out.println();
 	}
 	
 	/**
@@ -159,7 +167,6 @@ public class Game {
 	 * The user can choose which card to play
 	 * The card will then perform it's own action
 	 * All limits are verified at the end of the turn to make sure that everyone complies
-	 * 
 	 */
 	public void play() {	
 		while(!isThereAWinner) {
@@ -167,20 +174,50 @@ public class Game {
 			//draw till draw limit, check if draw is possible each time
 			drawCards(this.drawLimit);
 			
-			System.out.println(this.players.get(currentPlayer) + "'s turn to play...");
 			//play till play limit
 			for(int i = 0; i < this.playLimit; ++i) {
+				System.out.println(this.players.get(currentPlayer) + "'s turn to play...");
 				//check if user is out of cards. If so, turn ends
 				if(this.players.get(currentPlayer).getHandSize() == 0) {
 					System.out.println("No more cards to play. Turn has ended");
 					break;
 				}
 				
+				System.out.println("1. Play");
+				System.out.println("2. View Keepers");
+				System.out.println("3. View Goal");
+				System.out.println("4. View Rules");
+				System.out.println("5. Quit Game");
+				
+				int choice = InputManager.getIntergerInput("Please choose an option from the menu", 1, 5, "Please choose a valid option...");
+				switch(choice) {
+				case 1: break;
+				case 2: 
+					viewKeepersInPlay();
+					i--;
+					continue;
+				case 3:
+					viewGoals();
+					i--;
+					continue;
+				case 4:
+					viewRules();
+					i--;
+					continue;
+				case 5:
+					System.out.println();
+					return;
+				}
+				
 				this.players.get(this.currentPlayer).viewhand();
+				System.out.println(this.players.get(this.currentPlayer).getHandSize() + ". Go back\n");
+				int cardNumber = InputManager.getIntergerInput("Choose a card to play or go back to previous menu...", 1, this.players.get(currentPlayer).getHandSize(), "Please choose a valid card number...");			
 				
-				//User actually has more options -refactor
-				int cardNumber = InputManager.getIntergerInput("Choose a card to play", 1, this.players.get(currentPlayer).getHandSize(), "Please choose a valid card number...");			
-				
+				if(cardNumber == this.players.get(this.currentPlayer).getHandSize()) {
+					i--;
+					System.out.println();
+					continue;
+				}
 				Card playedCard = this.players.get(currentPlayer).play(cardNumber-1);
 				System.out.println("Played: ");
 				System.out.println(playedCard);
@@ -222,7 +259,6 @@ public class Game {
 	 * This function is called in two cases
 	 * 1. During a regular draw action
 	 * 2. During a rule change where the parameter will have the value of the remaining draws
-	 * 
 	 */
 	private void drawCards(int drawLimit) {
 		System.out.println("Drawing " + drawLimit + " cards...");
@@ -240,18 +276,50 @@ public class Game {
 	 * 
 	 * @param handLimit is the updated hand limit when a rule is changed
 	 * All players except the current have to discard cards
-	 * 
 	 */
 	private void discardHand(int handLimit) {
+		System.out.println("\nHand Limit has changed. All players have to comply...\n");
 		for(Player p:this.players) {
 			if(p == this.players.get(currentPlayer)) {
 				continue;
+			}
+			if(p.getHandSize() > handLimit) {
+				System.out.println(p + "'s turn to discard cards from hand...");
 			}
 			for(int i = 0; i < p.getHandSize() - handLimit; ++i) {
 				this.discardPile.add(p.discardCard());
 			}
 		}
-		
+		System.out.println("New Hand Limit applies to all players\n");
+	}
+	
+	/**
+	 * 
+	 * @param keeperLimit is the updated keeper limit when the rule is changed
+	 * All players except the current have to discard keepers immediately
+	 */
+	private void discardKeepers(int keeperLimit) {
+		System.out.println("\nKeeper Limit has changed. All players have to comply...\n");
+		for(Player p:this.players) {
+			if(p == this.players.get(currentPlayer)) {
+				continue;
+			}
+			if(p.getKeeperSize() > keeperLimit) {
+				System.out.println(p + "'s turn to discard keepers...");
+			}
+			for(int i = 0; i < p.getKeeperSize() - handLimit; ++i) {
+				this.discardPile.add(p.discardKeeper());
+			}
+		}
+		System.out.println("New Keeper Limit applies to all players\n");
+	}
+	
+	private void viewKeepersInPlay() {
+		System.out.println("Keepers in play:");
+		for(Player p:this.players) {
+			System.out.println(p + ":");
+			p.viewKeepers();
+		}
 	}
 	
 	public void checkWinner() {
@@ -274,28 +342,29 @@ public class Game {
 	/**
 	 * 
 	 * This function outputs the current rules of the game for the players' reference
-	 * 
 	 */
 	public void viewRules() {
 		System.out.println("Current rules:");
-		System.out.println("play limit: " + this.playLimit);
-		System.out.println("draw limit: " + this.drawLimit);
-		System.out.println("hand limit: " + this.handLimit);
-		System.out.println("keeper limit: " + this.keeperLimit);
+		System.out.println("Play Limit: " + this.playLimit);
+		System.out.println("Draw Limit: " + this.drawLimit);
+		System.out.println("Hand Limit: " + (this.handLimit == -1 ? "No limit set" : this.handLimit));
+		System.out.println("Keeper Limit: " + (this.keeperLimit == -1 ? "No limit set" : this.keeperLimit));
+		System.out.println();
 	}
 	
 	/**
 	 * 
 	 * This function outputs the current goal of the game
-	 * 
 	 */
 	public void viewGoals() {
 		if(this.currentGoal == null) {
-			System.out.println("No goal set");
+			System.out.println("No Goal set\n");
 			return;
 		}
 		
+		System.out.println("Current Goal: ");
 		System.out.println(this.currentGoal);
+		System.out.println();
 	}
 	
 	public Player getCurrentPlayer() {

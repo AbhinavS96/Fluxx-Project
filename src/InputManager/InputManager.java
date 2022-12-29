@@ -6,7 +6,6 @@ import java.util.Scanner;
  * 
  * @author abhinav
  * This class manages the input from the user and does the error handling
- *
  */
 public class InputManager {
 	private static Scanner scanner;

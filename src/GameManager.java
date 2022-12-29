@@ -8,7 +8,6 @@ import game.Game;
  * with different game types as children. Based on the input, the game can be initialized.
  * In this implementation, that is not done and by default, simplified fluxx is implemented.
  * Game credits: https://www.looneylabs.com/
- *
  */
 
 public class GameManager {
@@ -18,7 +17,6 @@ public class GameManager {
 	/**
 	 * 
 	 * @param numberOfPlayers input from the user giving the number of players in the game
-	 * 
 	 */
 	public GameManager(int numberOfPlayers) {
 		this.game = new Game(numberOfPlayers);
@@ -40,7 +38,6 @@ public class GameManager {
 	 * @param args not used
 	 * This is where the game starts. Repeatedly asks for valid input -the number of players
 	 * Then it starts Simplified Fluxx
-	 * 
 	 */
 	public static void main(String args[]) {
 		System.out.println("Welcome to Simplified Fluxx!!\n");
@@ -49,6 +46,7 @@ public class GameManager {
 		//start menu
 		boolean exitProgram = false;
 		while(!exitProgram) {
+			System.out.println("***********Main Menu***********\n");
 			System.out.println("1. Start a new game");
 			System.out.println("2. How to play");
 			System.out.println("3. Exit");
@@ -69,7 +67,7 @@ public class GameManager {
 				exitProgram = true;
 			}
 		}
-		System.out.println("Exiting game...");
+		System.out.println("Exiting game. Thanks for playing...");
 		InputManager.closeInputManager();
 	}
 

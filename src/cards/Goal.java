@@ -10,8 +10,8 @@ import game.Game;
  */
 
 public class Goal extends Card implements Comparable<List<Card>>{
-	private String cardName;
-	private List<String> goalRequirements;
+	private final String cardName;
+	private final List<String> goalRequirements;
 
 	public Goal(String cardName, List<String> goalRequirements) {
 		super("GOAL");
@@ -30,9 +30,9 @@ public class Goal extends Card implements Comparable<List<Card>>{
 	}
 	
 	public String toString() {
-		String response = this.cardType + "\n" + this.cardName + "\n" + this.goalRequirements.get(0);
+		String response = this.cardType + "\n" + this.cardName + "\n" + this.goalRequirements.get(0) + " ";
 		for(int i = 1; i < this.goalRequirements.size(); ++i) {
-			response += this.goalRequirements.get(i);
+			response += "and " + this.goalRequirements.get(i);
 		}
 		return response;
 	}

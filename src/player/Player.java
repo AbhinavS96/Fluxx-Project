@@ -12,8 +12,8 @@ import cards.Card;
  */
 
 public class Player {
-	private String name;
-	private int id;
+	private final String name;
+	private final int id;
 	private List<Card> hand;
 	private List<Card> keepers;
 	
@@ -117,7 +117,7 @@ public class Player {
 			return;
 		}
 		
-		System.out.println("Card in hand are:");
+		System.out.println("Cards in hand are:");
 		for(int i = 0; i < this.hand.size(); ++i) {
 			System.out.println((i+1) + ". " + this.hand.get(i));
 			System.out.println();

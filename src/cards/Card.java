@@ -8,7 +8,7 @@ import game.Game;
  */
 
 public abstract class Card {
-	protected String cardType;
+	protected final String cardType;
 
 	public Card(String cardType) {
 		this.cardType = cardType;

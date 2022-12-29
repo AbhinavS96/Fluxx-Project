@@ -10,7 +10,7 @@ import game.Game;
  */
 
 public class Keeper extends Card{
-	private String cardName;
+	private final String cardName;
 
 	public Keeper(String cardName) {
 		super("KEEPER");

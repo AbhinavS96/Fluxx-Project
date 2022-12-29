@@ -18,11 +18,12 @@ import player.Player;
 /**
  * 
  * @author abhinav
+ * This is the implementation of simplified fluxx
  */
 
 public class Game {
 	
-	private int playLimit, handLimit, drawLimit, keeperLimit;
+	private Integer playLimit, handLimit, drawLimit, keeperLimit;
 	private Goal currentGoal;
 	private List<Card> deck;
 	private List<Card> discardPile;
@@ -34,7 +35,7 @@ public class Game {
 	 * 
 	 * @param numberOfPlayers is the number of players in the game
 	 * Constructor that sets up the game. 
-	 * The limits are set as per the basic rules. -1 represents that the rule is not in play;
+	 * The limits are set as per the basic rules. null represents that the rule is not in play;
 	 * The discard pile is initially empty. Current player is set to 0.
 	 */	
 	public Game(int numberOfPlayers) {	
@@ -42,9 +43,9 @@ public class Game {
 		this.isThereAWinner = false;
 		
 		this.playLimit = 1;
-		this.handLimit = -1;
+		this.handLimit = null;
 		this.drawLimit = 1;
-		this.keeperLimit = -1;
+		this.keeperLimit = null;
 		this.currentGoal = null;
 		
 		this.deck = new ArrayList<Card>();
@@ -63,28 +64,28 @@ public class Game {
 		//goals
 		//reference for Arrays.asList: https://www.geeksforgeeks.org/initialize-an-arraylist-in-java/
 		this.deck.add(new Goal("The Appliances", new ArrayList<String>(Arrays.asList("Television", "The Toaster"))));
-		this.deck.add(new Goal("The Bakery", new ArrayList<String>(Arrays.asList("Bread", "Cookies"))));
-		this.deck.add(new Goal("The eye of the Beholder", new ArrayList<String>(Arrays.asList("Love", "The Eye"))));
-		this.deck.add(new Goal("Bed Time", new ArrayList<String>(Arrays.asList("Sleep", "Time"))));
-		this.deck.add(new Goal("Can't Buy Me Love", new ArrayList<String>(Arrays.asList("Money", "Love"))));
-		this.deck.add(new Goal("Chocolate Cookies", new ArrayList<String>(Arrays.asList("Chocolate", "Cookies"))));
-		this.deck.add(new Goal("Chocolate Milk", new ArrayList<String>(Arrays.asList("Chocolate", "Milk"))));
-		this.deck.add(new Goal("Chocolate Extravaganza", new ArrayList<String>(Arrays.asList("Chocolate", "The Party"))));
+//		this.deck.add(new Goal("The Bakery", new ArrayList<String>(Arrays.asList("Bread", "Cookies"))));
+//		this.deck.add(new Goal("The eye of the Beholder", new ArrayList<String>(Arrays.asList("Love", "The Eye"))));
+//		this.deck.add(new Goal("Bed Time", new ArrayList<String>(Arrays.asList("Sleep", "Time"))));
+//		this.deck.add(new Goal("Can't Buy Me Love", new ArrayList<String>(Arrays.asList("Money", "Love"))));
+//		this.deck.add(new Goal("Chocolate Cookies", new ArrayList<String>(Arrays.asList("Chocolate", "Cookies"))));
+//		this.deck.add(new Goal("Chocolate Milk", new ArrayList<String>(Arrays.asList("Chocolate", "Milk"))));
+//		this.deck.add(new Goal("Chocolate Extravaganza", new ArrayList<String>(Arrays.asList("Chocolate", "The Party"))));
 		
 		//keepers
 		this.deck.add(new Keeper("Television"));
 		this.deck.add(new Keeper("The Toaster"));
-		this.deck.add(new Keeper("Bread"));
-		this.deck.add(new Keeper("Cookies"));
-		this.deck.add(new Keeper("Love"));
-		this.deck.add(new Keeper("The Eye"));
-		this.deck.add(new Keeper("Sleep"));
-		this.deck.add(new Keeper("Time"));
-		this.deck.add(new Keeper("Money"));
-		this.deck.add(new Keeper("Love"));
-		this.deck.add(new Keeper("Chocolate"));
-		this.deck.add(new Keeper("Milk"));
-		this.deck.add(new Keeper("The Party"));
+//		this.deck.add(new Keeper("Bread"));
+//		this.deck.add(new Keeper("Cookies"));
+//		this.deck.add(new Keeper("Love"));
+//		this.deck.add(new Keeper("The Eye"));
+//		this.deck.add(new Keeper("Sleep"));
+//		this.deck.add(new Keeper("Time"));
+//		this.deck.add(new Keeper("Money"));
+//		this.deck.add(new Keeper("Love"));
+//		this.deck.add(new Keeper("Chocolate"));
+//		this.deck.add(new Keeper("Milk"));
+//		this.deck.add(new Keeper("The Party"));
 		
 		//rules
 		//draw limit
@@ -130,7 +131,7 @@ public class Game {
 
 	public void setHandLimit(int handLimit) {
 		System.out.println("Hand Limit updated to " + handLimit + "\n");
-		if(handLimit < this.handLimit) {
+		if(this.handLimit != null && handLimit < this.handLimit) {
 			discardHand(handLimit);
 		}
 		this.handLimit = handLimit;
@@ -147,7 +148,7 @@ public class Game {
 
 	public void setKeeperLimit(int keeperLimit) {
 		System.out.println("Keeper Limit updated to " + keeperLimit + "\n");
-		if(this.keeperLimit < keeperLimit) {
+		if(this.keeperLimit != null && this.keeperLimit < keeperLimit) {
 			discardKeepers(keeperLimit);
 		}
 		this.keeperLimit = keeperLimit;
@@ -205,15 +206,15 @@ public class Game {
 					i--;
 					continue;
 				case 5:
-					System.out.println();
+					System.out.println("Quitting game...\n");
 					return;
 				}
 				
 				this.players.get(this.currentPlayer).viewhand();
-				System.out.println(this.players.get(this.currentPlayer).getHandSize() + ". Go back\n");
+				System.out.println((this.players.get(this.currentPlayer).getHandSize()+1) + ". Go back\n");
 				int cardNumber = InputManager.getIntergerInput("Choose a card to play or go back to previous menu...", 1, this.players.get(currentPlayer).getHandSize(), "Please choose a valid card number...");			
 				
-				if(cardNumber == this.players.get(this.currentPlayer).getHandSize()) {
+				if(cardNumber == this.players.get(this.currentPlayer).getHandSize()+1) {
 					i--;
 					System.out.println();
 					continue;
@@ -232,16 +233,20 @@ public class Game {
 					return;
 				}
 			}
-			//check hand limit ignore case -1
-			while(this.handLimit != -1 && this.players.get(currentPlayer).getHandSize() > this.handLimit) {
+			
+			//check hand limit ignore case null
+			while(this.handLimit != null && this.players.get(currentPlayer).getHandSize() > this.handLimit) {
+				System.out.println("You have more cards than the Hand Limit. Please discard " +  (this.players.get(currentPlayer).getHandSize() - this.handLimit) + " cards...\n");
 				this.discardPile.add(this.players.get(currentPlayer).discardCard());
 			}
-			//check keeper limit ignore case -1
-			while(this.keeperLimit != -1 && this.players.get(currentPlayer).getKeeperSize() > this.keeperLimit) {
+			//check keeper limit ignore case null
+			while(this.keeperLimit != null && this.players.get(currentPlayer).getKeeperSize() > this.keeperLimit) {
+				System.out.println("You have more Keepers than the Keeper Limit. Please discard " +  (this.players.get(currentPlayer).getKeeperSize() - this.keeperLimit) + " keepers...\n");
 				this.discardPile.add(this.players.get(currentPlayer).discardKeeper());
 			}
 			
 			System.out.println("******" + this.players.get(currentPlayer) + "'s turn ends******\n");
+			
 			//at the end of the turn, the next player is decided
 			if(this.currentPlayer == this.players.size()-1) {
 				this.currentPlayer = 0;
@@ -287,6 +292,7 @@ public class Game {
 				System.out.println(p + "'s turn to discard cards from hand...");
 			}
 			for(int i = 0; i < p.getHandSize() - handLimit; ++i) {
+				System.out.println("You have more cards than the Hand Limit. Please discard " +  (p.getHandSize() - this.handLimit) + " cards...\n");
 				this.discardPile.add(p.discardCard());
 			}
 		}
@@ -308,6 +314,7 @@ public class Game {
 				System.out.println(p + "'s turn to discard keepers...");
 			}
 			for(int i = 0; i < p.getKeeperSize() - handLimit; ++i) {
+				System.out.println("You have more cards than the Keeper Limit. Please discard " +  (p.getKeeperSize() - this.keeperLimit) + " Keepers...\n");
 				this.discardPile.add(p.discardKeeper());
 			}
 		}
@@ -327,7 +334,7 @@ public class Game {
 			//check if goal id matches keeper id of the player
 			if(this.currentGoal != null && this.currentGoal.compareTo(p.getKeepers()) == 0) {
 				this.isThereAWinner = true;
-				System.out.println(p + " has won the game!");
+				System.out.println(p + " has won the game!\n");
 				return;
 			}
 		}
@@ -347,8 +354,8 @@ public class Game {
 		System.out.println("Current rules:");
 		System.out.println("Play Limit: " + this.playLimit);
 		System.out.println("Draw Limit: " + this.drawLimit);
-		System.out.println("Hand Limit: " + (this.handLimit == -1 ? "No limit set" : this.handLimit));
-		System.out.println("Keeper Limit: " + (this.keeperLimit == -1 ? "No limit set" : this.keeperLimit));
+		System.out.println("Hand Limit: " + (this.handLimit == null ? "No limit set" : this.handLimit));
+		System.out.println("Keeper Limit: " + (this.keeperLimit == null ? "No limit set" : this.keeperLimit));
 		System.out.println();
 	}
 	

@@ -2,6 +2,12 @@ package InputManager;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author abhinav
+ * This class manages the input from the user and does the error handling
+ *
+ */
 public class InputManager {
 	private static Scanner scanner;
 	
@@ -13,13 +19,13 @@ public class InputManager {
 	}
 	
 	public static int getIntergerInput(String displayText, int lowerLimit, int upperLimit, String errorMessage) {
-		int numberOfPlayers;
+		int response;
 		while(true) {
 			try {
 				System.out.println(displayText);
-				numberOfPlayers = scanner.nextInt();
-				if(numberOfPlayers < lowerLimit || numberOfPlayers > upperLimit) {
-					System.out.println("Please choose a number between" + lowerLimit + " and " + upperLimit + "...");
+				response = scanner.nextInt();
+				if(response < lowerLimit || response > upperLimit) {
+					System.out.println("Please choose a number between " + lowerLimit + " and " + upperLimit + "...");
 					continue;
 				}
 				break;
@@ -34,6 +40,6 @@ public class InputManager {
 				System.out.println("Something went wrong... Please try again.");
 			}
 		}
-		return numberOfPlayers;
+		return response;
 	}
 }

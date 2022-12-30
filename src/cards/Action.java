@@ -18,6 +18,7 @@ public class Action extends Card {
 	@Override
 	public void cardAction(Game game) {
 		actionRunner.run(game);
+		game.addToDiscardPile(this);
 	}
 	
 	@Override

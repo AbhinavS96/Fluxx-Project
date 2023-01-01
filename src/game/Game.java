@@ -6,7 +6,11 @@ import java.util.List;
 
 import InputManager.InputManager;
 import cards.Card;
+import cards.DrawLimit;
 import cards.Goal;
+import cards.HandLimit;
+import cards.KeeperLimit;
+import cards.PlayLimit;
 import player.Player;
 
 /**
@@ -19,13 +23,16 @@ import player.Player;
 
 public abstract class Game {
 	
-	private Integer playLimit, handLimit, drawLimit, keeperLimit;
+	protected Integer playLimit;
+	protected Integer handLimit;
+	protected Integer drawLimit;
+	protected Integer keeperLimit;
 	private Goal currentGoal;
 	protected List<Card> deck;
 	private List<Card> discardPile;
 	private List<Player> players;
 	private int currentPlayer;
-	boolean isThereAWinner;
+	private boolean isThereAWinner;
 	
 	/**
 	 * 
@@ -77,7 +84,17 @@ public abstract class Game {
 		this.currentPlayer = 0;
 	}
 	
+	/**
+	 * 
+	 * @param playLimit is the updated Play Limit
+	 * If the current rule is not a basic rule, then a new card is created and added to the discard pile
+	 * This is done because the rule card object is lost after assigning it's value to the game's state
+	 * This can later be refactored out when the game supports more types of rules
+	 */
 	public void setPlayLimit(int playLimit) {
+		if(this.playLimit != 1) {
+			addToDiscardPile(new PlayLimit(this.playLimit));
+		}
 		this.playLimit = playLimit;
 		System.out.println("Play Limit updated to " + playLimit + "\n");
 	}
@@ -86,16 +103,32 @@ public abstract class Game {
 	 * 
 	 * @param handLimit is the updated Hand Limit
 	 * If there is a need to discard cards, the discardHand function is called
+	 * If the current rule is not a basic rule, then a new card is created and added to the discard pile
+	 * This is done because the rule card object is lost after assigning it's value to the game's state
+	 * This can later be refactored out when the game supports more types of rules
 	 */
 	public void setHandLimit(int handLimit) {
+		if(this.handLimit != null) {
+			addToDiscardPile(new HandLimit(this.handLimit));
+		}
 		System.out.println("Hand Limit updated to " + handLimit + "\n");
-		if(this.handLimit != null && handLimit < this.handLimit) {
+		if(this.handLimit == null || handLimit < this.handLimit) {
 			discardHand(handLimit);
 		}
 		this.handLimit = handLimit;
 	}
-
+	
+	/**
+	 * 
+	 * @param drawLimit is the updated Draw Limit
+	 * If the current rule is not a basic rule, then a new card is created and added to the discard pile
+	 * This is done because the rule card object is lost after assigning it's value to the game's state
+	 * This can later be refactored out when the game supports more types of rules
+	 */
 	public void setDrawLimit(int drawLimit) {
+		if(this.drawLimit != 1) {
+			addToDiscardPile(new DrawLimit(this.drawLimit));
+		}
 		System.out.println("Draw Limit updated to " + drawLimit + "\n");
 		//check if the draw limit is greater. If so, trigger sufficient draws for the current user.
 		if(this.drawLimit < drawLimit) {
@@ -108,20 +141,34 @@ public abstract class Game {
 	 * 
 	 * @param keeperLimit is the updated Keeper Limit
 	 * If there is a need to discard Keepers, the discardKeepers function is called
+	 * If the current rule is not a basic rule, then a new card is created and added to the discard pile
+	 * This is done because the rule card object is lost after assigning it's value to the game's state
+	 * This can later be refactored out when the game supports more types of rules
 	 */
 	public void setKeeperLimit(int keeperLimit) {
+		if(this.keeperLimit != null) {
+			addToDiscardPile(new KeeperLimit(this.keeperLimit));
+		}
 		System.out.println("Keeper Limit updated to " + keeperLimit + "\n");
-		if(this.keeperLimit != null && this.keeperLimit < keeperLimit) {
+		if(this.keeperLimit == null || this.keeperLimit < keeperLimit) {
 			discardKeepers(keeperLimit);
 		}
 		this.keeperLimit = keeperLimit;
 	}
 	
 	public void setGoal(Goal goal) {
+		addToDiscardPile(this.currentGoal);
 		this.currentGoal = goal;
 		System.out.println("Goal updated to: ");
 		System.out.println(goal);
 		System.out.println();
+	}
+	
+	protected void resetRules() {
+		this.playLimit = 1;
+		this.handLimit = null;
+		this.drawLimit = 1;
+		this.keeperLimit = null;
 	}
 	
 	/**
@@ -175,7 +222,7 @@ public abstract class Game {
 				
 				this.players.get(this.currentPlayer).viewhand();
 				System.out.println((this.players.get(this.currentPlayer).getHandSize()+1) + ". Go back\n");
-				int cardNumber = InputManager.getIntergerInput("Choose a card to play or go back to previous menu...", 1, this.players.get(currentPlayer).getHandSize(), "Please choose a valid card number...");			
+				int cardNumber = InputManager.getIntergerInput("Choose a card to play or go back to previous menu...", 1, this.players.get(currentPlayer).getHandSize()+1, "Please choose a valid card number...");			
 				
 				if(cardNumber == this.players.get(this.currentPlayer).getHandSize()+1) {
 					i--;
@@ -187,10 +234,8 @@ public abstract class Game {
 				System.out.println(playedCard);
 				System.out.println();
 				
-				//Let the card do it's action
+				//Let the card do it's action. Adding to discard pile is handled here
 				playedCard.cardAction(this);
-				//add the played card to the discard pile
-				this.discardPile.add(playedCard);
 				
 				if(isThereAWinner) {
 					return;
@@ -199,12 +244,12 @@ public abstract class Game {
 			
 			//check Hand Limit, ignore case null
 			while(this.handLimit != null && this.players.get(currentPlayer).getHandSize() > this.handLimit) {
-				System.out.println("You have more cards than the Hand Limit. Please discard " +  (this.players.get(currentPlayer).getHandSize() - this.handLimit) + " cards...\n");
+				System.out.println(this.players.get(currentPlayer) + ", You have more cards than the Hand Limit. Please discard " +  (this.players.get(currentPlayer).getHandSize() - this.handLimit) + " cards...\n");
 				this.discardPile.add(this.players.get(currentPlayer).discardCard());
 			}
 			//check Keeper Limit, ignore case null
 			while(this.keeperLimit != null && this.players.get(currentPlayer).getKeeperSize() > this.keeperLimit) {
-				System.out.println("You have more Keepers than the Keeper Limit. Please discard " +  (this.players.get(currentPlayer).getKeeperSize() - this.keeperLimit) + " keepers...\n");
+				System.out.println(this.players.get(currentPlayer) + ", You have more Keepers than the Keeper Limit. Please discard " +  (this.players.get(currentPlayer).getKeeperSize() - this.keeperLimit) + " keepers...\n");
 				this.discardPile.add(this.players.get(currentPlayer).discardKeeper());
 			}
 			
@@ -228,7 +273,7 @@ public abstract class Game {
 	 * 1. During a regular draw action
 	 * 2. During a rule change where the parameter will have the value of the remaining draws
 	 */
-	private void drawCards(int drawLimit) {
+	protected void drawCards(int drawLimit) {
 		System.out.println("Drawing " + drawLimit + " cards...");
 		for(int i = 0; i < drawLimit; ++i) {
 			//if the deck is empty, the discard pile is reshuffled and added back into the deck
@@ -246,7 +291,7 @@ public abstract class Game {
 	 * All players except the current have to discard cards if they have too many on their hand
 	 */
 	private void discardHand(int handLimit) {
-		System.out.println("\nHand Limit has changed. All players have to comply...\n");
+		System.out.println("\nHand Limit has changed. All players except current have to comply...\n");
 		for(Player p:this.players) {
 			if(p == this.players.get(currentPlayer)) {
 				continue;
@@ -255,11 +300,11 @@ public abstract class Game {
 				System.out.println(p + "'s turn to discard cards from hand...");
 			}
 			for(int i = 0; i < p.getHandSize() - handLimit; ++i) {
-				System.out.println("You have more cards than the Hand Limit. Please discard " +  (p.getHandSize() - this.handLimit) + " cards...\n");
+				System.out.println("You have more cards than the Hand Limit. Please discard " +  (p.getHandSize() - handLimit) + " cards...\n");
 				this.discardPile.add(p.discardCard());
 			}
 		}
-		System.out.println("New Hand Limit applies to all players\n");
+		System.out.println("New Hand Limit applies to all players except current\n");
 	}
 	
 	/**
@@ -268,7 +313,7 @@ public abstract class Game {
 	 * All players except the current have to discard keepers immediately if they have too many Keepers in play
 	 */
 	private void discardKeepers(int keeperLimit) {
-		System.out.println("\nKeeper Limit has changed. All players have to comply...\n");
+		System.out.println("\nKeeper Limit has changed. All players except current have to comply...\n");
 		for(Player p:this.players) {
 			if(p == this.players.get(currentPlayer)) {
 				continue;
@@ -276,12 +321,16 @@ public abstract class Game {
 			if(p.getKeeperSize() > keeperLimit) {
 				System.out.println(p + "'s turn to discard keepers...");
 			}
-			for(int i = 0; i < p.getKeeperSize() - handLimit; ++i) {
-				System.out.println("You have more cards than the Keeper Limit. Please discard " +  (p.getKeeperSize() - this.keeperLimit) + " Keepers...\n");
+			for(int i = 0; i < p.getKeeperSize() - keeperLimit; ++i) {
+				System.out.println("You have more cards than the Keeper Limit. Please discard " +  (p.getKeeperSize() - keeperLimit) + " Keepers...\n");
 				this.discardPile.add(p.discardKeeper());
 			}
 		}
-		System.out.println("New Keeper Limit applies to all players\n");
+		System.out.println("New Keeper Limit applies to all players except the current\n");
+	}
+	
+	public void addToDiscardPile(Card card) {
+		this.discardPile.add(card);
 	}
 	
 	private void viewKeepersInPlay() {
@@ -292,6 +341,10 @@ public abstract class Game {
 		}
 	}
 	
+	/**
+	 * Checks if any player has won by comparing keepers against goal
+	 * Multi goal support can be added here as an extension 
+	 */
 	public void checkWinner() {
 		for(Player p:this.players) {
 			//check if goal requirements matches keeper name of the player
@@ -303,9 +356,15 @@ public abstract class Game {
 		}
 	}
 	
-	private void resetDiscardPile(){
-		Collections.shuffle(this.discardPile);
-		this.deck = this.discardPile;
+	/**
+	 * This function will get called in two cases.
+	 * 1. When the deck is empty
+	 * 2. WHen the "Empty the Trash" Action is played where the discard pile is added to the deck and shuffled
+	 * Both cases are handled by this.deck.addAll()
+	 */
+	protected void resetDiscardPile(){
+		this.deck.addAll(this.discardPile);
+		Collections.shuffle(this.deck);
 		this.discardPile = new ArrayList<>();
 	}
 	

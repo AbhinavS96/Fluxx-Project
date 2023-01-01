@@ -127,7 +127,7 @@ public class Player {
 		
 		System.out.println("Keepers in hand are:");
 		for(int i = 0; i < this.keepers.size(); ++i) {
-			System.out.println((i+1) + ". " + this.keepers.get(i));
+			System.out.println((i+1) + ". " + this.keepers.get(i) + "\n");
 		}
 		System.out.println();
 	}

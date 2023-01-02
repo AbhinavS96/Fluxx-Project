@@ -15,7 +15,6 @@ import cards.PlayLimit;
  * 
  * @author abhinav
  * This is the implementation of the Simplified Fluxx code
- * Currently, this initializes the cards.
  *
  */
 public class SimplifiedFluxx extends Game {
@@ -28,6 +27,7 @@ public class SimplifiedFluxx extends Game {
 	 * This is a basic collection of cards to show the game in action
 	 * Standard fluxx has a larger deck of cards
 	 */
+	@Override
 	protected void initializeCards(){
 		//Add cards to the deck.
 		//Goal cards

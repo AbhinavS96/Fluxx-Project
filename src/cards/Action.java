@@ -2,8 +2,21 @@ package cards;
 
 import game.Game;
 
+/**
+ * 
+ * @author abhinav
+ * Class for implementing actions
+ * It accepts an ActionRunner object which implements the run function that defines the action
+ *
+ */
+
 public class Action extends Card {
 
+	/**
+	 * actionRunner contains the run method. This is unique to each action and implements its behavior
+	 * cardName is the name of the action
+	 * cardDescription describes the action as shown on the card
+	 */
 	private final ActionRunner actionRunner;
 	private final String cardName;
 	private final String cardDescription;

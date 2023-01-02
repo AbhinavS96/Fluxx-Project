@@ -12,17 +12,25 @@ import cards.Keeper;
 import cards.KeeperLimit;
 import cards.PlayLimit;
 
+/**
+ * 
+ * @author abhinav
+ * This is the implementation of Standard Fluxx
+ * It has more cards implemented and a few actions as well.
+ *
+ */
+
 public class StandardFluxx extends Game{
 
 	public StandardFluxx(int numberOfPlayers) {
 		super(numberOfPlayers);
 	}
 
-	@Override
 	/**
 	 * Standard Fluxx implements more cards than Simplified fluxx, but not all of them
 	 * Some Actions are implemented to showcase their working
 	 */
+	@Override
 	protected void initializeCards() {
 		//Add cards to the deck.
 		//Goal cards

@@ -13,12 +13,15 @@ import game.StandardFluxx;
  */
 
 public class GameManager {
-	
+	/**
+	 * Game is the object that will be initialized based on the users choice of game type
+	 */
 	private Game game;
 	
 	/**
 	 * 
 	 * @param numberOfPlayers input from the user giving the number of players in the game
+	 * @param gameType input from the user based on which game is initialized to simple or standard Fluxx
 	 */
 	public GameManager(int numberOfPlayers, int gameType) {
 		switch(gameType) {
@@ -49,7 +52,7 @@ public class GameManager {
 	 * 
 	 * @param args not used
 	 * This is where the game starts. Takes the game type and number of players as an input from the user
-	 * Then it starts the chosen version. Only Simplified Fluxx is completely implemented
+	 * Then it starts the chosen version. 
 	 */
 	public static void main(String args[]) {
 		System.out.println("Welcome to Simplified Fluxx!!\n");

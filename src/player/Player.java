@@ -13,6 +13,11 @@ import cards.Card;
  */
 
 public class Player {
+	/**
+	 * name is the user name assigned to a player
+	 * hand is the list of cards that the user has in each turn. It is updated as the game goes by
+	 * keepers is the list of keepers that the user has in play  
+	 */
 	private final String name;
 	private List<Card> hand;
 	private List<Card> keepers;

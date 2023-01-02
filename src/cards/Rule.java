@@ -4,6 +4,7 @@ package cards;
 /**
  * 
  * @author abhinav
+ * Abstract class as a parent to all rule subsclasses
  *
  */
 public abstract class Rule extends Card {

@@ -17,12 +17,18 @@ import player.Player;
  * 
  * @author abhinav
  * This is the implementation of main game logic
- * Implementation specific logic is implemented in child classes
+ * Game type specific logic is implemented in child classes
  * 
  */
 
 public abstract class Game {
 	
+	/**
+	 * The four Limits and goal indicate the current state of the game. These are modified by cards as the game progresses
+	 * The cards are initially added to the list deck and they are moved to the list discardPile as the game progresses
+	 * List players hold all the active players and current player is the index of the player who's turn it is
+	 * isThereAWinner is another state variable used to indicate the end of the game
+	 */
 	protected Integer playLimit;
 	protected Integer handLimit;
 	protected Integer drawLimit;
@@ -194,6 +200,7 @@ public abstract class Game {
 					break;
 				}
 				
+				//print menu
 				System.out.println("1. Play");
 				System.out.println("2. View Keepers");
 				System.out.println("3. View Goal");
@@ -220,6 +227,7 @@ public abstract class Game {
 					return;
 				}
 				
+				//print cards and also the option to step back
 				this.players.get(this.currentPlayer).viewhand();
 				System.out.println((this.players.get(this.currentPlayer).getHandSize()+1) + ". Go back\n");
 				int cardNumber = InputManager.getIntergerInput("Choose a card to play or go back to previous menu...", 1, this.players.get(currentPlayer).getHandSize()+1, "Please choose a valid card number...");			
@@ -234,7 +242,7 @@ public abstract class Game {
 				System.out.println(playedCard);
 				System.out.println();
 				
-				//Let the card do it's action. Adding to discard pile is handled here
+				//Let the card do it's action. Adding to discard pile is handled there
 				playedCard.cardAction(this);
 				
 				if(isThereAWinner) {
@@ -378,6 +386,7 @@ public abstract class Game {
 		System.out.println("Draw Limit: " + this.drawLimit);
 		System.out.println("Hand Limit: " + (this.handLimit == null ? "No limit set" : this.handLimit));
 		System.out.println("Keeper Limit: " + (this.keeperLimit == null ? "No limit set" : this.keeperLimit));
+		viewGoals();
 		System.out.println();
 	}
 	

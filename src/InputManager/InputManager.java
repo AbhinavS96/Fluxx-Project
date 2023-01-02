@@ -17,6 +17,14 @@ public class InputManager {
 		InputManager.scanner.close();
 	}
 	
+	/**
+	 * This function repeatedly asks for a valid integer input. Error handling is implemented here based on the params
+	 * @param displayText Text to display while asking for input
+	 * @param lowerLimit Lower limit of valid input
+	 * @param upperLimit Upper limit of valid input
+	 * @param errorMessage Message to display for invalid input
+	 * @return The valid integer given as input by the user 
+	 */
 	public static int getIntergerInput(String displayText, int lowerLimit, int upperLimit, String errorMessage) {
 		int response;
 		while(true) {
